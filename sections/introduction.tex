@@ -13,10 +13,48 @@
 \chapter{Introduction}
 \label{ch:Introduction}
 
-Text classification is is an ubiqutous task that presents in many problems, reaching from email spam filter to automatic document categorization. Its commerical value for businesses working with data crawled from the internet is undeniable. 
+\section{Motivation}
+\label{sec:Motivation}
+[ More general definition of text classification -> See Wikipedia ]
+Text classification is is an ubiqutous task that appears in many business related problems, reaching from email spam filtering to automatic document categorization. 
+Text classification can be approached via machine learning methods. For an automatic classifier to perform well, it is indispensable to gather labeled example documents. This requires a domain expert to spend long hours tagging documents, a work that is expensive either in economic and in timely terms. 
 
-Text classification can be solved with machine learning approaches. For an automatic classifier to perform well, it is indispensable to gather labeled example documents. This requires a domain expert to spend long hours tagging documents, which can be expensive either in monetary and in timely terms. 
-An alternative, would be to create complex queries to automatically categorize or classify documents. Unfortunately, this does not eliminate the need of a human domain expert to create and evaluate these queries. 
-As the variety and the number of documents a classification system has to handle grows, manual tagging or query creation becomes even more complex and time consuming task. 
- 
-It is therefore crucial to 
+[ Specify what there ominous "queries" are]
+An alternative, lacking (?... "ohne") machine learning techniques, would be to create complex queries to automatically retrieve and/or classify documents. 
+[ Insert example here ]
+Unfortunately, this does not eliminate the need of a human domain expert creating and evaluating queries. As the variety and the number of documents a classification system has to handle grows, manual tagging or query creation becomes an even more complex and time consuming task. 
+
+An example of the importance and the same time the complexity of text classification, can be found at \textit{Echobot}. Echobot is a middle-sized german company that develops machine learning based tools for social media monitoring and sales. Their goal is to offer their customers solutions that help monitoring what the web is reporting about their products, their firm or their competitors, helping them to adjust their business strategy according to trends detected on the web. Web content is retrieved by a complex crawler that scans millions of social media postings and hundreds of thousands articles and company websites daily. Finally, these pieces of information are analyzed and categorized with machine learning based techniques in order to extract useful and relevant information for the customer. 
+In one specific context, text classification is used to alert customers when newly published content on the web concerns a specific topic. E.g. one might be interested in knowing when a company of a specific industry is about to change their management personell or announced a site closure. These so called \textit{business signals} are of particular commercial interest for the customer. It is e.g. known that acquisitions are especially high when a company undergoes a restructuring of their managing personell. [Benefits... ]
+
+Echobot faces the same problems previously mentioned. Snippets of text are collected by a complex content crawler and then passed through a text categorizing module. In order to be able to optimize classification accuracy of crawled pieces of text, echobot developed an hybrid system, consisting of a domain expert that creates rules to pre-filter content and an automatic classification system, which is fed with text snippets passing the filter. A classifier or a classifier ensemble then assigns it to the most probable category (e.g. a business signal). In order to improve classification performance, features with grammatical and syntatcic information are extracted before classification. The features extraction process is human designed by personell that is familiar with grammatical and syntactic composition of sentences pertaining to a specific category. The expert designs features that will help correctly categorizing a text snippet with an automatic classifier. The data used to create a classification model, is tagged manually from a subset of the pre-filtered text snippets. It is noticeable that, even though the classification process is automatized, training and optimization techniques are carefully applied by a domain expert. 
+
+Why is it necessary to heavily involve a human agent in the classification process? As mentioned earlier, labeling data is expensive. Since there is only a limited amount of labeled text snippets (usually around 1000-2000 samples per class), it is crucial that information quality retrieved from a known dataset is maximized. Left to itself, a state of the art text classifier, performs too poorly. [What? By itself?!?... explain better]
+
+Generally speaking, the described hybrid method leverages the fact that text classification performance is improved by introducing external knowledge about textual semantics. In this case, it is provided by a domain expert.  He defines specific and features that will increase the classifier's confidence when predicting a sample's class. 
+
+From this more abstract view, a question arises about the whole classification approach: Would it be possible to \textit{automatically} - i.e. without human agents - introduce external knowledge about language semantics in order to improve the classification performance?
+\begin{table}                                                  
+\centering                                                     
+\begin{tabular}{|l|c|c|c|c|c|c|c|}                             
+\hline                                                         
+ & 90 \% & 80 \% & 67 \% & 50 \% & 33 \% & 20 \% & 10 \% \\    
+\hline                                                         
+MNB-uni & 77.9 & 77.5 & 76.6 & 75.6 & 74.2 & 72.4 & 68.7 \\    
+\hline                                                         
+MNB-uni-sub & 77.8 & 77.3 & 76.7 & 76.0 & 74.5 & 73.0 & 70.1 \\
+\hline                                                         
+\hline
+MNB-bi & 78.6 & 78.4 & 77.6 & 76.0 & 74.5 & 72.5 & 68.7 \\     
+\hline                                                         
+MNB-bi-sub & 78.8 & 78.3 & 77.6 & 76.8 & 74.8 & 73.2 & 70.1 \\ 
+\hline                                                         
+MNB-bi-sub* & 79.0 & 78.4 & 77.9 & 76.5 & 75.0 & 73.2 & 70.1 \\
+\hline                                                         
+\end{tabular}                                                  
+\caption{MyTableCaption}                                       
+\label{table:MyTableLabel}                                     
+\end{table}     
+
+\section{Problem Statement}
+\label{sec:problem-statement}
