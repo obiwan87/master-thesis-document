@@ -34,27 +34,21 @@ Why is it necessary to heavily involve a human agent in the classification proce
 Generally speaking, the described hybrid method leverages the fact that text classification performance is improved by introducing external knowledge about textual semantics. In this case, it is provided by a domain expert.  He defines specific and features that will increase the classifier's confidence when predicting a sample's class. 
 
 From this more abstract view, a question arises about the whole classification approach: Would it be possible to \textit{automatically} - i.e. without human agents - introduce external knowledge about language semantics in order to improve the classification performance?
-\begin{table}                                                  
-\centering                                                     
-\begin{tabular}{|l|c|c|c|c|c|c|c|}                             
-\hline                                                         
- & 90 \% & 80 \% & 67 \% & 50 \% & 33 \% & 20 \% & 10 \% \\    
-\hline                                                         
-MNB-uni & 77.9 & 77.5 & 76.6 & 75.6 & 74.2 & 72.4 & 68.7 \\    
-\hline                                                         
-MNB-uni-sub & 77.8 & 77.3 & 76.7 & 76.0 & 74.5 & 73.0 & 70.1 \\
-\hline                                                         
-\hline
-MNB-bi & 78.6 & 78.4 & 77.6 & 76.0 & 74.5 & 72.5 & 68.7 \\     
-\hline                                                         
-MNB-bi-sub & 78.8 & 78.3 & 77.6 & 76.8 & 74.8 & 73.2 & 70.1 \\ 
-\hline                                                         
-MNB-bi-sub* & 79.0 & 78.4 & 77.9 & 76.5 & 75.0 & 73.2 & 70.1 \\
-\hline                                                         
-\end{tabular}                                                  
-\caption{MyTableCaption}                                       
-\label{table:MyTableLabel}                                     
-\end{table}     
 
 \section{Problem Statement}
+
+[Problems with text classification, 
+	- e.g. out of words vocabulary,
+	- sparsification of features]
+	
+When there is lack of labeled data and the labeling process is expensive and time consuming, text classification has to be performed with small datasets. In the standard bag-of-word interpretation of the dataset, this presents at least two problems:
+
+\begin{enumerate}
+	\item Out of Vocabulary words
+	\item Sparisification of feature vectors
+\end{enumerate}
+
+\subsection{Out of vocabulary words}
+
+
 \label{sec:problem-statement}
