@@ -1,54 +1,541 @@
-%% LaTeX2e class for student theses
-%% sections/content.tex
-%% 
-%% Karlsruhe Institute of Technology
-%% Institute for Program Structures and Data Organization
-%% Chair for Software Design and Quality (SDQ)
-%%
-%% Dr.-Ing. Erik Burger
-%% burger@kit.edu
-%%
-%% Version 1.3, 2016-12-29
+% % LaTeX2e class for student theses % sections/content.tex % % Karlsruhe
+% Institute of Technology % Institute for Program Structures and Data
+% Organization % Chair for Software Design and Quality (SDQ) % % Dr.-Ing. Erik
+% Burger % burger@kit.edu % % Version 1.3, 2016-12-29
 
 \chapter{Introduction}
 \label{ch:Introduction}
+\textit{Text classification} or \textit{text categorization } (TC) refers to the
+activity of assigning a document to one or more classes.
+In an era in which information is mainly present in digital form, TC has
+become a widely spread technique to solve a variety of business related problems. 
+E.g. using comments posted on online platforms, automatic
+text classification techniques are being used by companies to analyze stregths 
+and weaknesses in their brand and/or products. This aspect of text categorization 
+is also known as \textit{sentiment analysis}. Another example of TC, that
+affects everyone's daily interaction with computers and mobile devices, is
+email-spam filtering: automated TC is used to filter out
+uninteresting or even dangerous email messages. Other applications include the
+automatic generation of document metdata, word sense disambiguation and document 
+organization.
+
+The importance of categorizing and organizing textual information already
+arose scientific interest in the 60's. However, it was only in the 1980's that
+first implementations were used in productive environments. 
+In its early versions TC required a \textit{domain expert} to define a set of
+rules with which documents could be assigned to their corresponding class or set
+of classes. This is also known as \textit{knowledge engineering} (KE).
+Nonetheless, with the arrival of more powerful hardware, the aforementioned
+approach lost popularity and was mainly replaced by \textit{machine learning} (ML)
+techniques, whose main advantage is that classification rules could be generated
+by an \textit{automated} and \emph{generalizing} inductive learning process. Not
+only classification accuracies of ML approaches are comparable with those of human experts, 
+but since the process is performed by computers, it allows for savings
+in terms of labor power and makes transferral to different application domains
+easier.\footnote{From now on, if not specified otherwise, whenever this work
+refers to \textit{text categorization}, \textit{text classification} or \textit{TC}, it
+will be with respect to ML based methods.}
+
+Nowadays machine learning based text categorization is widely spread among many
+areas of industry. Being able to analyze and categorize natural language has
+become a very valuable skill for many businesses. It is therefore useful to
+continue the research for ways to improve automated text classification. 
 
 \section{Motivation}
 \label{sec:Motivation}
-[ More general definition of text classification -> See Wikipedia ]
-Text classification is is an ubiqutous task that appears in many business related problems, reaching from email spam filtering to automatic document categorization. 
-Text classification can be approached via machine learning methods. For an automatic classifier to perform well, it is indispensable to gather labeled example documents. This requires a domain expert to spend long hours tagging documents, a work that is expensive either in economic and in timely terms. 
+Generally speaking, the strength of an automatic classifier lies in the fact
+that it can induce complex rules for classification, by analyzing samples of
+\textit{preclassified} documents --- a.k.a \textit{labeled} documents. 
+The more labeled samples the classifier is presented with, the
+better the classifier will be able to internalize a model able to predict
+categories of unknown samples.
+Unfortunately, in most cases the vast majority of available data
+is unlabeled. Even though the labeling process requires less expertise and
+time than knowledge engineering, producing labeled data is still a costly and
+time consuming process.
 
-[ Specify what there ominous "queries" are]
-An alternative, lacking (?... "ohne") machine learning techniques, would be to create complex queries to automatically retrieve and/or classify documents. 
-[ Insert example here ]
-Unfortunately, this does not eliminate the need of a human domain expert creating and evaluating queries. As the variety and the number of documents a classification system has to handle grows, manual tagging or query creation becomes an even more complex and time consuming task. 
+An example of the importance and at the same time of the difficulties of text
+classification can be found at \textit{Echobot}, a small
+German company that develops machine learning based tools for social media
+monitoring and sales. Their goal is to offer their customers solutions that
+help oversee what the web is reporting about their products, their firm or
+their competitors, helping them to adjust their business strategy according 
+to trends detected on the web. Web content is retrieved by a complex web crawler
+that scans millions of social media postings and hundreds of thousands
+of articles and company websites daily. The information gathered in this way is
+analyzed, structured and categorized with machine learning based software that
+extracts useful and relevant information for the customer.
 
-An example of the importance and the same time the complexity of text classification, can be found at \textit{Echobot}. Echobot is a middle-sized german company that develops machine learning based tools for social media monitoring and sales. Their goal is to offer their customers solutions that help monitoring what the web is reporting about their products, their firm or their competitors, helping them to adjust their business strategy according to trends detected on the web. Web content is retrieved by a complex crawler that scans millions of social media postings and hundreds of thousands articles and company websites daily. Finally, these pieces of information are analyzed and categorized with machine learning based techniques in order to extract useful and relevant information for the customer. 
-In one specific context, text classification is used to alert customers when newly published content on the web concerns a specific topic. E.g. one might be interested in knowing when a company of a specific industry is about to change their management personell or announced a site closure. These so called \textit{business signals} are of particular commercial interest for the customer. It is e.g. known that acquisitions are especially high when a company undergoes a restructuring of their managing personell. [Benefits... ]
+In one specific context, text classification is used to alert customers when
+newly published web content concerns a specific topic. E.g. one might
+be interested in knowing when a company of a specific industry is about to change
+their management personell or has announced a site closure. 
+These so called \textit{business signals} are of particular commercial interest 
+for the customer. It is e.g. known that a restructuring 
+of a company's managing personell, is often followed by the purchase of new
+services and products. With this knowledge at hand, a salesman that has been
+alerted of such event, can contact and make an offer before anyone else.
 
-Echobot faces the same problems previously mentioned. Snippets of text are collected by a complex content crawler and then passed through a text categorizing module. In order to be able to optimize classification accuracy of crawled pieces of text, echobot developed an hybrid system, consisting of a domain expert that creates rules to pre-filter content and an automatic classification system, which is fed with text snippets passing the filter. A classifier or a classifier ensemble then assigns it to the most probable category (e.g. a business signal). In order to improve classification performance, features with grammatical and syntatcic information are extracted before classification. The features extraction process is human designed by personell that is familiar with grammatical and syntactic composition of sentences pertaining to a specific category. The expert designs features that will help correctly categorizing a text snippet with an automatic classifier. The data used to create a classification model, is tagged manually from a subset of the pre-filtered text snippets. It is noticeable that, even though the classification process is automatized, training and optimization techniques are carefully applied by a domain expert. 
+Currently Echobot's system supports categorization on around a dozen of 
+different business signals, yet due to its usefulness for the customer, the
+demand for developing new business signals is growing. Echobot faces the same
+problems previously mentioned: labeled data is scarce and costly to produce,
+but nonetheless crucial for effective text categorization.
+Moreover, since Echobot is a small company, it is not viable to allocate the 
+resources needed to label large amount of data. In order to optimize
+classification accuracy inspite of the scarcity of labeled data, Echobot developed 
+a hybrid process combining ideas of KE and ML. Instead of building a
+classification model based on the raw textual data, a domain expert
+preprocesses the documents by annotating each sample with semantic and
+syntactic information that will help the classifier build a more precise
+classification model.
 
-Why is it necessary to heavily involve a human agent in the classification process? As mentioned earlier, labeling data is expensive. Since there is only a limited amount of labeled text snippets (usually around 1000-2000 samples per class), it is crucial that information quality retrieved from a known dataset is maximized. Left to itself, a state of the art text classifier, performs too poorly. [What? By itself?!?... explain better]
+Why is it necessary to heavily involve a human agent in the classification
+process? Given the complexity of natural language, state of the art
+classifiers trained with too few labeled documents might not be able to build a
+generalizable and accurate classification model. This can also be observed
+experimentally. In comparison with the annotated variant, classification
+accuracy with raw textual data performs significantly worse.
+It is therefore useful to extract the maximum amount of relevant information 
+from the available preclassified dataset in order to maximize the expected
+classification accuracy.
 
-Generally speaking, the described hybrid method leverages the fact that text classification performance is improved by introducing external knowledge about textual semantics. In this case, it is provided by a domain expert.  He defines specific and features that will increase the classifier's confidence when predicting a sample's class. 
-
-From this more abstract view, a question arises about the whole classification approach: Would it be possible to \textit{automatically} - i.e. without human agents - introduce external knowledge about language semantics in order to improve the classification performance?
+Generally speaking, the described hybrid method leverages the fact that text
+classification performance is improved by introducing external knowledge
+about textual syntax and semantics. In this case, it is provided by a domain expert.
+He defines specific features that will increase the classifier's confidence when
+predicting a sample's class.
+From a more abstract view, a question arises about the whole classification
+approach: Would it be possible to \textit{automatically} --- i.e. without human
+agents --- introduce external knowledge about language semantics in order to
+improve the classification performance?  
 
 \section{Problem Statement}
 
-[Problems with text classification, 
-	- e.g. out of words vocabulary,
-	- sparsification of features]
+ As discussed in the previous section, additional information about semantics
+ and syntax of textual data are engineered by a domain expert in order to
+ improve classification accuracy. The goal of this section is to lay out the
+ main reasons why classification works better with the manually preprocessed
+ dataset and pinpoint the problems this work proposes to solve.
+ 
+ \subsection{Elements of Text Classification}
+ 
+For the sake of clarity it is useful to introduce a few terms and symbols that
+will be used in later explanations.
+
+Let $D=\{d_1, \ldots, d_{|D|}\}$ be a \textit{dataset} of $|D|$
+documents. Each document $d_i$ is composed of words $V = \{v_1, \ldots,
+v_{|V|}\}$, the \textit{vocabulary} of dataset $D$.
+The meanings of the terms ``word'' and ``document'' don't necessarily coincide
+with their colloquial counterpart. A ``word'' can also be a sequence of numbers
+and/or symbols and a ``document'' is simply an ordered collection of ``words''.
+As a matter of fact, the segmentation of a ``document'' into ``words'' is done
+during a process called \emph{tokenization}, as a result of which a
+``word'' is also refered to as \emph{tokens}.
+
+More formally, a document $d_i$ is a tuple with $|d_i|$ elements such that
+$d_i = (w_1^i,\ldots,w_{|d_i|}^i)$ with $w_j^i \in V$.
+Therefore, whenever this work refers to ``words in a document'', instead of
+meaning ``word'' in the sense of a lexically valid word, we mean the elements
+$w_j$ of a $|d_i|$-tuple $d_i$.
+
+A \emph{classifier} $c: D \to \Omega$ estimates the class of each 
+document $d \in D$ with $\hat{\omega}_{d} \coloneqq c(d)$. If $\hat{\omega}_{d} =
+\omega_{d}$, then the document has been classified correctly by the classifier $c$. 
+On the other hand, if $\hat{\omega}_{d} \neq \omega_{d}$, then we say that
+this document has \emph{not }been classified correctly. We denote a document's
+true class with $\omega_{d}$ ---  a.k.a. \emph{label} of document $d$. The set
+$G_D = \{\omega_d \mid d \in D\}$ is also called the \emph{ground truth} over $D$. It
+is important to note that each document has exactly one and only one class
+associated to it. This induces a partition of the dataset $D$ as follows:
+
+\begin{eqnarray*}
+ D = \bigcup\limits_{\omega \in \Omega} D_\omega \\
+ D_\omega \coloneqq  \{ d \mid \omega_d = \omega\} \\
+\forall \omega' \neq \omega'' \in \Omega: D_{\omega'} \cap D_{\omega''} =
+ \emptyset 
+\end{eqnarray*}
+ 
+Let $N_k^i$ be the count of occurences of word $v_k$ in document $i$. Also, let
+$N_{k,\omega}$ refer to the number of documents with label $\omega_d = \omega$ 
+that contain word $v_k \in V$.
+
+Another way to express this is
+\begin{eqnarray*}
+ N_k^i \coloneqq \sum\limits_{j=1}^{|d_i|} \mathbb{1}\{w_j^i = v_k\} \\
+ N_{k,\omega} \coloneqq \sum\limits_{d \in D_\omega} \mathbb{1}\{N^i_k \geq 1\} 
+\end{eqnarray*}
+where $\mathbb{1}\{\cdot\}$ denotes the characteristic function.
+
+From this, a definition for the word counts over all labels $\Omega$ follows
+directly:
+
+\begin{eqnarray*}
+N_k \coloneqq \sum_{\omega'\in \Omega} N_{k,\omega'} 
+\end{eqnarray*}
+
+In the scope of this work, we will only consider the case of \emph{binary
+classification}, i.e. a document's label is either ``$+$'' (positive) or
+``$-$'' (negative), i.e.  $\Omega = \{-,+\}$.
+
+Strictly speaking, a classifier does not perform a direct mapping from
+the raw textual data to a predicted class $\hat{\omega}$. Instead, prior to the actual
+classification, documents $d \in D$ are mapped to a numerical vector
+space $\mathcal{F}$, also called \emph{feature space}, on the base of which an internal 
+classification model and finally the classification function $c$ are computed.
+
+A widely spread state of the art approach in text classification to represent
+documents as numerical vectors is the \emph{Bag-of-Words (BoW)}.
+A document $d$ can be represented as a BoW in the following way
+
+\begin{eqnarray*}
+	\mathcal{B} := \mathbb{N}^{|V|} \\
+	\mathbf{b}_i \in \mathcal{B} \\
+	\mathbf{b}_i \coloneqq (b_1^i, b_2^i, \ldots, b_{|V|}^i)^\intercal \\
+	b_k^i \coloneqq N_k^i
+\end{eqnarray*}
 	
-When there is lack of labeled data and the labeling process is expensive and time consuming, text classification has to be performed with small datasets. In the standard bag-of-word interpretation of the dataset, this presents at least two problems:
+In other words, a BoW is a vector of positive integers and zero, whose
+dimensionality equals the size of the vocabulary $V$. The value $b_{ik}$
+indicates how many occurences of word $v_k$ there are in document
+$d_i$.
 
-\begin{enumerate}
-	\item Out of Vocabulary words
-	\item Sparisification of feature vectors
-\end{enumerate}
+For the sake of brevity and readability we also introduce the following
+notations:
 
-\subsection{Out of vocabulary words}
+\begin{eqnarray*}
+	\mathbf{b}_i: V \mapsto \mathbb{N} \\
+	\mathbf{b}_i(v_k) := b_k^i,\ v_k \in V
+\end{eqnarray*}
+
+Since by definition the objects $\mathbf{b}_i: V \mapsto \mathbb{N}$ and
+$\mathbf{b}_i \in \mathcal{B}$ are structurally identical, they will be used interchangeably, 
+depending on which notation is better suited for the argument. 
+
+The notations introduced in this section can be overviewed in table
+\ref{tab:notations} and will be used in the course of the entire 
+master thesis.
+
+[Add Training/Validation/Evaluation split?]
+[Classification function c directly as function of feature space?]
+\begin{table}
+\begin{tabular}{|l|l|l|}
+
+\textbf{Notation} & \textbf{Description} & \textbf{Example} \\
+
+$D$ & set of preclassified documents & $D=$\{('Hello', 'world'),
+('Hello') \} \\
+
+$V$ & vocabulary of $D$ & $V=$\{'Hello', 'world'\} \\
+
+$N_k^i$ & counts of word $v_k$ in document $d_i$ & $N_2^1 = 1,\ N_2^2 = 0$ 
+\\
+
+$N_k$ & number of documents containing word $v_k$ & $N_2 = 2$ \\
+
+$G_D$ & ground truth & $G_D = \{+,-\}$  \\
+
+$N_{k,\omega}$ & counts of $v_k$ in $D_\omega$ & $N_{2, -} = 0$ \\ 
+
+$\mathbf{b}_i$ & BoW of document $d_i$ & $\mathbf{b}_1 = (1, 1)^\intercal,\
+\mathbf{b}_2 = (1,0)^\intercal$ \\
+
+$\mathbf{b}(v_k)$ & Value of $v_k$ in BoW $\mathbf{b}$ &
+$\mathbf{b_2}(\text{\lq world\rq}) = 0$
+ 
+\end{tabular}
+\caption{Elements of \emph{TC}: Overview of Notations}
+\label{tab:notations}
+\end{table}
+ \subsection{Statistical Quality of Features}
+ 
+In BoW representations, the order in which words occur in a document is
+neglected.
+Moreover, even for small datasets, the dimension of such a feature vector 
+can easily reach an order of magnitude of thousands or even hundreds of thousands of dimensions.
+Inspite of disregarding the order in which words occur in a
+document, representing documents as BoWs has proven to work reasonably well for
+many text classification tasks. A possible reason why this approach works, is
+that the statistics of word occurences provide a good measure for predicting a
+document's class. E.g. the Naive Bayes classifier estimates the posterior
+probability $P(\omega|d)$ of a class $\omega$ given a document $d$,
+which essentially is the result of counting the occurences of each word for each
+class. \textbf{[Use optimal Bayes classifier instead?]
+}
+However, respecting the order in which word a occur can often yield important
+information that can be used in classification tasks. Consider the sentences
+``no, it's good" and ``it's no good". Despite expressing the opposite of each
+other, in their BoW representation with the vocabulary $V= \left\{\text{'no',
+'it's, 'good'} \right\}$ the two sentences would be identical. Therefore, an
+extension of the Bag-Of-Words, that at takes into account the local ordering
+of words is the Bag-Of-N-Grams.
+Instead of counting the occurence of single words --- a.k.a. \emph{unigrams} --- one might
+also expand the concept of Bag-of-Words to occurences of \textit{sequences} of
+words.
+
+E.g. consider the following sentence, which is solely composed of unigrams:
+
+\begin{center} 
+\textit{It's a beautiful day}
+\end{center} 
+
+Here the unigrams are
+
+\begin{center}
 
 
+\begin{tabular}{|c|c|c|c|}
+\hline 
+It's & a & beautiful & day \\
+\hline
+\end{tabular}
+
+\end{center}
+ 
+
+The 2-Grams --- a.k.a \emph{bigrams} --- on the other hand  are 
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+<s> It's & It's a & a beautiful & beautiful day & day </s> \\
+\hline
+\end{tabular}
+\end{center}
+
+where ``<s>'' and ``</s>'' are tokens that denote the start and the end of the
+sentence respectively. 
+
+[Explain how bigrams are represented in a bag of words]
+ 
+The concept can be extended to sequences of $N > 2$ words. It is easy to see,
+that N-Grams contain more information than simple unigrams, as they
+also explain the order and the co-occurence of N-tuples of unigrams. In
+\textbf{[citation needed] X et. al} experimentally showed just by using
+\textit{bigrams} classification accuracies can be slightly improved.
+Nonetheless, using \textit{trigrams} didn't make the classification accuracy better. 
+Shouldn't features carrying more information about the word
+ordering yield a better classification model? Unfortunately, this is not necessarily 
+the case. One way to see this, is by considering what happens to the statistics
+of each $N$-Gram, when N grows.
+ 
+Assume a unigram $w$ appears $N_w$ times in a given dataset $D$. All bigrams
+$(w,w')$ for $w' \neq w$ can't possibly occur more often than  $w$ itself.
+Generally speaking $N_{(w,w')} \leq N_w$. 
+The same logic can be applied to $N$ and $N+1$ for $N > 2$.\footnote{W.l.o.g. this can also be
+said about bigrams $(w'',w)$ with $w'' \neq w$.} In the extreme case, when $N = \max_{d' \in D}
+|d'|$, then every $N$-Gram occurs at most one time. In synthesis, what we observe is that by building bigger and bigger
+$N$-Grams we reduce the average count of N-Grams per document.  
+
+From a statistical point of view this might present a problem. In its classical
+interpretation, the probability of an event, in this case that an 
+N-Gram $v_k$ appears in class $\omega$, is approximated by
+its relative frequency with respect to the counts of $v_k$ in the whole dataset: 
+
+\begin{equation}
+	P(w|\omega) \approx \frac{N_{k,\omega}}{N_k} =:
+	\hat{P}(w|\omega)
+\end{equation}
+
+The main claim of frequentist probability is that for inifnite samples the
+relative frequency converges to the true underlying probability, in the same 
+way as the relative frequency of throwing ``heads'' with a fair coin, will
+approach 0.5 with a growing number of coin throws. Therefore, as we consider the
+number of observed documents $|D|$ approaching infinity, we obtain 
+
+\begin{equation}
+	P(w|\omega) = \lim_{|D| \to \infty} \frac{N_{k,\omega}}{N_k}
+\end{equation}
+
+With fewer occurences for each N-Gram, the estimates for the word probabilities
+become more biased due to scarcity of samples. This phenomenon is also
+known as \emph{sampling error}. \textbf{[Include $\epsilon \in
+\mathcal{O}(1/\sqrt{|D|})$?]} This error propagates to the estimated posterior
+probability $\hat{P}(\omega|d)$. The result is that words with low counts act
+like noise, which on average has no impact on classification accuracy at all.
+ 
+So far we have seen that using N-Grams allows to add sequential and
+co-occurence information to a Bag-Of-Words representation of a document. As
+matter of fact, it is not the only method used to enrich a Bag-Of-Words vector
+with additional information. Another approach, is to so called
+\emph{Part-Of-Speech (PoS)} tagging. This refers to annotating each word with its grammatical
+ function within the sentence it occurs. For our example sentence this would like
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Word} & \textbf{PoS} \\
+\hline 
+It 		  & \emph{pronoun - predicative subject of ``is''} \\
+'s 		  & \emph{finite verb - predicate} \\ 
+a 		  & \emph{indefinite article of ``day''}  \\
+beautiful & \emph{adjective of ``day''} \\
+day		  & \emph{noun - subject of ``is''} \\
+\hline
+\end{tabular}
+\end{center}
+
+In the same way as with N-Grams, the syntactic information provided by PoS-tags
+can, given enough samples, improve classification accuracy \textbf{[citation
+needed]}.
+Nonetheless, the statistical bias due to the increased number of possible of
+word-PoS-tag pairs combinations remains.
+
+As seen so far, appending additional information N-Grams or PoS-tags can be used as a method
+to enrich BoW-vectors with syntactic information, yet cannot be
+expected to generally improve classification accuracy due to the induced
+statistical bias. Note that the number of PoS-Tags usually asymptotically grows
+in $\mathcal{O}(|Unigrams|^2)$, which not only makes the the feature statistics
+heavily sparse, but also doesn't scale well in terms of computation time and
+memory consumption.
+
+One way to avoid the introduction of noisy features is to
+selectively choose what information is included for which word. In the case of
+business signal classification, described in the previous section, this is
+exactly the task of the human agent. In this case the linguistic skills of the 
+domain expert are leveraged for the selection and combination of PoS tags
+features and N-Grams. Instead of arbitrarily adding N-Grams and PoS-tags, the
+operator chooses carefully a subset of features that is meaningful for the
+underlying classification task. 
+
+The operations of the domain expert can be described mathematically as follows: 
+let $D$ be a set of documents containing unigrams $V_U$, N-Grams $V_N$ and
+PoS-Tags $V_P$ such that $V = V_U \cup V_N \cup V_P$. Based on this vocabulary, the resulting BoW
+feature vector has dimension $|V| = |V_U| + |V_P| + |V_N|$.
+The operator's task is to combine the available unigrams, N-Grams and PoS-Tags
+such that the resulting feature space reflects his understanding
+of semantics for the underlying classification task.
+More formally, this implies the creation of a list of rules
+$\boldsymbol{\rho} = (\rho_1, \rho_2, \ldots, \rho_n)$, where each rule $\rho_i:
+\mathcal{B} \to \mathbb{N}$ for $i=1,2,3,\ldots,n$ maps a subspace of the BoW
+feature space $\mathcal{B}$ to a scalar value.
+[The operations performed by the rules $\rho_i$ of logical, arithmetic or
+semantic nature.]
+
+\begin{eqnarray*}
+\boldsymbol\rho: \mathcal{B} \to \mathcal{H} \\
+\boldsymbol{\rho}(\mathbf{b}) = (\rho_1(\mathbf{b}), \ldots,
+\rho_n(\mathbf{b}))^\intercal \\
+\mathcal{H} \coloneqq \mathbb{N}^n
+\end{eqnarray*}
+
+In other words, the classification problem is transfered from the large
+feature space of BoW's to a much lower dimensional and semantically optimized
+space engineered by the domain expert.
+
+The following toy example illustrates how such a feature selection might look
+like for a specific vocabulary: 
+
+\begin{eqnarray*}
+V_U \supset \{\text{'good', 'not', bad'}\}, V_P \supset \{\text{``not'' - particle -
+negates\ ``bad"'}\} \\
+\rho_1(\mathbf{b}) = \mathbf{b}(\text{'good'}) \lor \left[\mathbf{b}(\text{'bad'})
+\land \mathbf{b}(\text{'``not'' - particle - negates\ ``bad"'}\right]
+\end{eqnarray*}
+
+The rule above merges the words ``good'' and ``not bad'' to one new feature.
+This is done by checking whether the word ``bad'' appears in combination with a
+``not"-particle that negates ``bad''. Note that the same result could be achieved
+by using the bigram ``not bad'' and merging it with the word ``good''.
+In a task of sentiment analysis this would be a sensible rule to
+distinguish whether the word ``bad'' was used in a negative or in a positive
+way. This couldn't be done efficiently by representing the words ``not''
+and ``bad'' separately as unigrams, as the word ``not'' could a appear in a 
+context that does not refer to ``bad''.
+Also, since the occurences of the term ``good'' and ``not bad'' are treated
+equally, their statistics will be combined and hence will be more robust towards
+sampling errors.
+
+\subsection{Out of Vocabulary Words}
 \label{sec:problem-statement}
+
+Another challenge encountered in text classification is \emph{Out-Of-Vocabulary (OOV)} 
+words. OOV words are encountered in the case in which an unknown document, i.e.
+a document for which the true label is not known,
+contains words that are not part of the classifier's known vocabulary. 
+As a consequence, the information provided by OOV words cannot be used for
+prediction, since they do not have any representation in the classifier's feature 
+space. 
+
+One possible way to tackle this problem is to introduce external knowledge about
+\textit{synonymie}, thus allowing a mapping to known words without distorting
+the original meaning.
+In the context of echobot's business signal classification, this problem is again 
+solved by exploiting the domain expert's linguistic and taxonomic understanding
+of words. He preemptively creates a set of synonyms to which the classifier can
+fall back to in case a word is not contained in the known vocabulary.
+
+We can define this operation as a function $\tau: \tilde{V} \to V$, that
+maps elements of the set of OOV words $\tilde{V}$ to the set of known
+vocabulary $V$. Here the set $T_v = \left\{ \tilde{v} \in \tilde{V} \mid
+\tau(\tilde{v})=v \right\} $ can be interpreted as a set of synonyms or lexical
+substitutes for the word $v$.
+
+
+\subsection{Problem Synthesis}
+
+The two problems identified so far, namely the decrease in
+statistical quality and OOV words, can be alleviated by involving a human agent
+with linguistic knowledge. 
+In this case the human agent creates a collection of rules $\boldsymbol\rho:
+\mathcal{V} \to \mathcal{H}$ that maps the set of available features to an engineered
+feature space $\mathcal{H}$ that will --- with best knwoledge of the domain
+expert --- increase the expected classification accuracy.
+
+The goal of this master thesis is to find an operation
+$\sigma_{\mathcal{A}}: \mathcal{D} \to \mathcal{F}$ that approximates the
+behaviour of the human agent with respect to the problems reported earlier and 
+that is not based on the involvement of a human domain expert. In other words,
+we will answer the question of whether it is possible to introduce an external
+knowledge source to the classification process that helps to include features 
+with higher information content whilst reducing the induced sampling
+error and make OOV words useful to the classification process.
+
+\section{Suggested Solution}
+
+The semantic knowledge about language allows a human expert to generate a
+feature space, such that the information contained in the training dataset is
+maximally exploited in order to achieve higher classification accuracies. It is
+this semantic understanding, that allows human operator to merge N-Grams and
+PoS-annotated words with others in order to minimize the sampling error [This
+needs to be explained in the previous section].
+ 
+We suggest to extend the classification process by an automated prepocessing of
+the dataset equipped with one or several metrics that allow to measure the
+dissimilarity between words. Unfrequent words could then be compared with each other and
+merged if similar enough, thus allowing for less biased statistics. 
+Merging here refers to agglomerating words $w_1, w_2, \ldots w_k$ to a set
+of words $W$ and then replacing every occurence a word $w \in W$ with
+a representantive $w^* \in W$
+
+Moreover, OOV words could be replaced with similar words known by the
+classifier.
+A metric that operates in this way, can be designed by using \textit{word
+vectors}. In recent years, Milokow et. al \textbf{[citation needed]} developed a method
+to embed words in vector space, which involves shallow learning with neural
+networks --- for obvious reasons this technique is also called \textit{word embeddings}. His
+implementation has become known as \emph{word2vec}, which is short for
+word-to-vector. Using their  vectorial representation, it is then possible to
+measure the similarity between words by simply computing the angle between the
+corresponding vectors. This method has been exhaustivley benchmarked and tested
+on tasks of lexical substitution, word sense disambiguation, sentiment
+analysis, etc. 
+
+Let $V$ be the vocabulary of a dataset and $\tilde{V}$ the set of OOV words. The
+aforementioned preprocessors can then be described as two functions $\sigma_1:
+\tilde{V} \to V$ and  $\sigma_2: V \to V'$ where $V' \subsetneq V$ and
+$\tilde{V} \cap V = \emptyset$. [The entire process can be formulated as $\sigma
+\equiv \sigma_1 \circ \sigma_2$]. [Figure needed]
+
+[Vorschau: Was in welchem Kapitel kommt und was genau entwickelt wird!]
+
+\section{Scope}
+
+In the scope of this master thesis, we are going to explore the possibilities of
+creating a preprocessing procedure $\sigma$ whose goal is to extract the maximum
+possible information from the dataset and thereby maximizing the expected
+classification accuracy. Even though there we considered PoS-Tagging as a
+possibility of enriching Bag-Of-Words, the considerations in this master
+thesis will be restricted to N-Grams.    
+
+[What else?] 
