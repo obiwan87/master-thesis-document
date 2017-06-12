@@ -21,8 +21,8 @@
 \author{Antonino Simone Di Stefano}
 
 %% Title (and possibly subtitle) of the thesis
-\title{Semantic Term Replacements with Word
-Embeddings for improving Text Classification }
+\title{A novel distance metric based on word embeddings for improving short
+text classification with term clustering.}
 
 %% Type of the thesis 
 \thesistype{Master's Thesis}
@@ -71,8 +71,12 @@ Embeddings for improving Text Classification }
 \usepackage{csquotes}
 \usepackage{hyperref}
 \usepackage[citestyle=numeric,style=numeric,backend=biber]{biblatex}
+\usepackage{mathtools}
 
 \addbibresource{thesis.bib}
+
+%% Custom Commands
+\input{commands.tex}
 
 %% ====================================
 %% ====================================
@@ -81,6 +85,7 @@ Embeddings for improving Text Classification }
 %% ||                                ||
 %% ====================================
 %% ====================================
+
 \begin{document}
 
 %% Set PDF metadata
@@ -128,7 +133,7 @@ Embeddings for improving Text Classification }
 \input{sections/introduction.tex}
 \input{sections/problem-analysis.tex}
 \input{sections/related-work.tex}
-% \input{sections/content.tex}
+\input{sections/method.tex}
 \input{sections/evaluation.tex}
 \input{sections/conclusion.tex}
 

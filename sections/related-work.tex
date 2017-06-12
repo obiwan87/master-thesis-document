@@ -1,1 +1,87 @@
 \chapter{Related Work}
+
+Being a major problem in TC, techniques for reducing statistical sparsity has
+been researched from various angles.
+
+\section{Feature Selection}
+Feature selection is a technique to reduce the feature space dimension. In the
+first step, each feature is ranked with a measure that expresses his
+discriminative power. Then, the top-$N$ features are selected and
+used for classification. 
+
+In \cite{yang1997comparative} Yang et al.
+compared text classification effectiveness by using measures like \emph{mutual information},
+\emph{information gain}, $\chi^2$-squared test to select a subset of relevant
+features. The proposed measures explore the relative distribution of 
+terms among the classes and rank features with higher discrimination information
+with higher absolute values. Their experiments show that classification
+accuracy either remains the same or is slightly poorer after applying feature selection.
+
+Singh et al. propose a feature selection approach based on the
+concept of \emph{Gini coefficient of inequality}, usually implied for measuring the
+inequality of income. Despite outperforming the formerly mentioned statisical
+measures, no overall improvement on classification was reported
+\cite{singh2010feature}. 
+
+\section{Term Clustering}
+
+\subsection{Distributional Clustering}
+
+ Another family of approaches, that is more related to this work, is so called
+ \emph{term clustering}. Instead of selecting single features, term clustering methods aim
+ to reduce feature dimensionality by partitioning the feature space into
+ $K$ clusters of subspaces. The clusters build in this way are than used as
+ features as a \emph{Bag of Word-Clusters}. Baker et al.
+ \cite{baker1998distributional} propose to cluster terms using a distributional metric based on a variant of the
+ kullback-leibler divergence. The suggested metric expresses the discriminative
+ information loss given by clustering two terms together.
+ The proposed clustering algorithm greedily clusters terms with minimal
+ information loss. The results of their experiment showed that feature
+ dimensionality can be heavily reduced without losing much classification accuracy.
+ Nonetheless, no improvement in comparison to unpreprocessed datasets were
+ reported. Based on Baker's work \cite{baker1998distributional},
+ Slonim and Tishby \cite{slonim2001power} propose an improved clustering
+ algorithm using the \emph{Information Bottleneck Method}. The principle is similar to
+ \cite{baker1998distributional}, but theoretically derived by maximizing the
+ mutual information of a word and its cluster with respect to their relative
+ distribution over the categories. Moreover, they also develop a clustering
+ algorithm, in which the pairwise cluster-distances are update as the clusters
+ change.
+ They show that their method can improve classification accuracy, however only when datasets are very small. 
+ For large datasets the quality of classification decays.
+
+ \subsection{Semantic Clustering}
+ 
+ With the introduction of word embeddings, term clustering has been researched
+ on the bases of the basis of the induced distance metric in the embedding
+ vector space. Long and Yanqing \cite{ma2015using} used the cosine similarity
+ between word vectors to build term clusters using $K$-Means. A bag of clusters
+ was then used for classification. Their results suggest that a slight
+ improvement could be achieved in classification performance when using certain values of $K$.
+ In \cite{wang2016semantic} Peng et al. use word embeddings based clustering in
+ combination with neural networks. They use the euclidean distance in the
+ embedding vector space to map similar phrases ($N$-Grams) to the same neural
+ units and then use a softmax decision layer to assign a class probabilities to
+ the input document. Classification was evaluated on short text datasets.
+ Their work reports slight improvements in classification in comparison
+ with other state-of-the-art approaches.
+ 
+ \section{Paragraph Embeddings}
+ 
+ Following the same principle of word embeddings, in \cite{le2014distributed} Le
+ and Milokov also propose \emph{paragraph embeddings}. In their work they
+ present a method to represent sentences of variable length as fixed-length
+ vectors. Similarly to word embeddings, in the resulting embedding vector space
+ similar paragraphs are close to each other. They report improvements in
+ a task of sentiment analysis when compared to state of the art approaches using
+ BoWs. 
+ 
+ \section{Discussion}
+ The methods discussed above either use the distributional or semantic
+ information provided by word embeddings to reduce statistical sparsity and thus
+ improve or retain classification accuracy with lower dimensional feature
+ spaces. To the best of our knowledge, an attempt to combine both approaches,
+ i.e. distributional and semantic clustering, has not been made yet. Our work
+ proposes to use both the distributional information provided by the
+ labeled dataset and the external semantic knowledge from pre-trained word
+ embeddings to perform term clustering.
