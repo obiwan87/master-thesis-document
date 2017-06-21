@@ -1,2 +1,9 @@
 \newcommand{\mli}[1]{\mathit{#1}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand\givenbase[1][]{\:#1\lvert\:}
+\let\given\givenbase
+\newcommand\sgiven{\givenbase[\delimsize]}
+\DeclarePairedDelimiterX\Basics[1](){\let\given\sgiven #1}
+\newcommand\Average{E\Basics}
+\DeclareMathOperator{\sign}{sign}

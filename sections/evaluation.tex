@@ -1,66 +1,128 @@
-%% LaTeX2e class for student theses
-%% sections/evaluation.tex
-%% 
-%% Karlsruhe Institute of Technology
-%% Institute for Program Structures and Data Organization
-%% Chair for Software Design and Quality (SDQ)
-%%
-%% Dr.-Ing. Erik Burger
-%% burger@kit.edu
-%%
-%% Version 1.3, 2016-12-29
-
 \chapter{Evaluation}
 \label{ch:Evaluation}
 
-%% -------------------
-%% | Example content |
-%% -------------------
-\dots
+\section{Datasets}
 
-\section{First Section}
-\label{sec:Evaluation:FirstSection}
-\begin{table}                                                    
-\centering                                                       
-\begin{tabular}{|c|c|c|c|c|c|c|c|}                               
-\hline                                                           
- & 90 \% & 80 \% & 67 \% & 50 \% & 33 \% & 20 \% & 10 \% \\      
-\hline                                                           
-MNB-uni & 97.4 & 96.6 & 95.5 & 92.8 & 89.0 & 85.1 & 83.2 \\      
-\hline                                                           
-MNB-uni-sub & 96.5 & 96.0 & 95.6 & 92.9 & 89.6 & 85.4 & 83.3 \\  
-\hline                                                           
-MNB-bi & 96.2 & 96.6 & 97.4 & 95.4 & 91.4 & 86.1 & 83.3 \\       
-\hline                                                           
-MNB-bi-sub & 97.4 & 97.5 & 97.7 & 95.4 & 92.2 & 87.7 & 83.8 \\   
-\hline                                                           
-MNB-bi-sub* & 98.0 & 97.4 & 97.1 & 94.6 & 92.1 & 87.2 & 83.9 \\  
-\hline                                                           
-NBSVM-uni & 91.5 & 91.8 & 92.8 & 92.5 & 92.4 & 91.3 & 88.3 \\    
-\hline                                                           
-NBSVM-uni-sub & 89.2 & 90.7 & 93.2 & 92.8 & 93.3 & 91.8 & 89.3 \\
-\hline                                                           
-NBSVM-bi & 93.6 & 93.3 & 93.2 & 92.0 & 91.0 & 88.2 & 85.4 \\     
-\hline                                                           
-NBSVM-bi-sub & 93.3 & 93.7 & 94.8 & 93.1 & 92.6 & 90.7 & 87.5 \\ 
-\hline                                                           
-NBSVM-bi-sub* & 95.5 & 95.5 & 94.4 & 94.6 & 92.6 & 91.9 & 89.1 \\
-\hline                                                           
-\end{tabular}                                                    
-\caption{MyTableCaption}                                         
-\label{table:MyTableLabel}                                       
-\end{table}
-\dots
+To evaluate the effectiveness of the proposed method, we conducted experiments
+on 11 short text datasets, of which seven were provided by echobot GmbH and four
+are publicly available and have been used in experiments of previous research.
+The following description of each dataset follows. A summary of some statistical
+data about the datasets can be viewed in Table \ref{tbl:dataset}. 
 
-\section{Second Section}
-\label{sec:Evaluation:SecondSection}
+\subsection{Business Signals}
 
-\dots
+The datasets provided by echobot are a collection of short text snippets used
+for training of \emph{busisness signals} classifiers (see Section
+\ref{sec:echobot}).
+For the evaluation of our method we used the training datasets for seven different business signals. 
+All seven datasets are in written, non-colloquial german language. Each
+document has an average length of approximately 20 words. The task is to
+discriminate positive from negative samples, where negative samples were chosen
+to be particurlarly hard to discriminate from the positive samples by a domain expert.
+The business signals evaluated in this work are the following:
 
-\section{Third Section}
-\label{sec:Evaluation:ThirdSection}
+\begin{itemize}
+  \setlength\itemsep{0.1em}
+  \item \textbf{\textit{Change of management}}: Snippets of news about change of
+  mangement personell in a company.
+  \item \textbf{\textit{Company Expansion}}: Snippets of news about expansions of
+  companies.
+  \item \textbf{\textit{Company Merger}}: Snippets of news about company
+  mergers.
+  \item \textbf{\textit{Raffle}}: Shorts excerpts from websites that offer a prize game. 
+  \item \textbf{\textit{Exhibition attendancy}}: Snippets of news or short excerts from
+  company websites announcing an attendancy at an exhibition or fair.
+  \item \textbf{\textit{Product recall}}: Short news reports about companies recalling
+  products from the market.
+  \item \textbf{\textit{Offer of Employment}}: Short job offer announcements or
+  job descriptions.
+\end{itemize}
 
-\dots
-%% ---------------------
-%% | / Example content |
-%% ---------------------
+More details about the datasets are displayed in Table \ref{tbl:dataset}. 
+
+\subsection{Public datasets}
+
+We used the following publicly available english text snippet datasets for
+evaluation:
+
+\begin{itemize}
+  \item \textbf{\textit{Customer Reviews}}: Short product reviews in colloquial
+  English. The task is to discriminate good and bad reviews.
+  \item \textbf{\textit{MPQA}}: A collection of short 2-3 word phrases. The task is to
+  classify them based on their polarity (positive, negative).
+  \item \textbf{\textit{Subjectivity}}:  Positive/negative subjective reviews and plot
+  summaries.
+  \item \textbf{\textit{RT}}: Short movie reviews with one sentence per review.
+\end{itemize}
+
+We also evaluated our method on larger datasets:
+\begin{itemize}
+  \item \textbf{\textit{RT-2k}}: A standard dataset containing 2000
+  positive/negative movie reviews in full length.
+  \item \textbf{\textit{Atheism vs Religion}} \&  \textbf{\textit{Windows vs
+  Graphics}}:
+  Pairs of categories taken from the 20-newsgroups dataset. The dataset consists of
+  messages exchanged in 20 different mail newsgroups. In the datasetd used in
+  this work, the email headers were removed.
+\end{itemize}
+
+Since the computation of a dissimilarity matrix of bigrams requires more memory
+than was available on our machine, we used smaller versions of datasets, by
+randomly selecting a fraction of the samples. In Table \ref{tbl:datasets} 
+datasets that were shrunk are indicate by the suffix ``-S''.
+  
+\subsection{Tokenization}
+
+All datasets were were tokenized using NLTK's TwitterTokenizer, since it has a
+better recognition of tokens written in natural language. E.g. In case of
+Hashtags it tokenizes the character \# and the following word as two tokens, instead of one.
+Other features include the recognition of parenthesis, i.e. if a token
+appears in parenthesis like e.g. ``(token)'' it will be tokenized as ``(``,
+``token'', ``)''. This allows for better coverage of words in the pretrained
+word embeddings.
+
+\section{Pretrained Word Embeddings}
+
+We used two different word embeddings for the evaluation, one for English and
+one for German datasets. For the English datasets we used google's pretrained
+Word2Vec model\footnote{Downloadable at
+\url{https://code.google.com/archive/p/word2vec/}}. It was trained on a part of
+Google's News dataset, which contains around 100 billion words. The final model consists 3000000 word vectors of
+dimensionality 300. [Parameters?]
+
+We trained a German word2vec model using a german news
+corpus from 2013 containing about 600 million words.\footnote{Downloadable at
+\url{http://www.statmt.org/wmt14/training-monolingual-news-crawl/}} For
+training we used the python library gensim . The vectors were trained using
+the skip-gram model. We used negative sampling with 10 samples, a window size of
+5 and ignored all words with a total frequency lower than 50.  The
+resulting 600000 word vectors are of dimension 300. 
+
+\section{Experimental Setup}
+
+\subsection{Training-Test Splits}
+
+We split the datasets in training and test datasets using 10-Fold and 2-Fold cross
+validation.
+In order to average out random effects, for each dataset we ran the
+$k$-Fold cross validation process three times, each time with different
+training-test splits.
+
+
+\subsection{Paramter Search}
+For each dataset the optimal parameter combination was obtained via grid search. 
+Since our method uses a different parameter set for each size of $N$-grams, in
+order to find the best parameter combination for $N$-Grams we used the best
+parameter combination found for $(N-1)$-Grams. E.g. assume that for a dataset
+the we found the best parameter combination for unigrams $\alpha_1^*,
+\beta_1^*, K_1^*$. Our goal is to find the best combination for dataset with
+affixed bigrams. Therefore, in order to have less parameter combinations to
+search, for the parameter search on the bigram dataset, we fix the
+parameters for unigram clustering to $\alpha_1^*, \beta_1^*, K_1^*$, since we
+know that they worked best for unigrams. Subsequently, we conduct a grid
+search only on bigram clustering parameters.
+
+\section{Results}
+
+The efficacy of our method was measured with the classification accuracy, i.e.
+the ratio of correctly classified to classified samples in total. 

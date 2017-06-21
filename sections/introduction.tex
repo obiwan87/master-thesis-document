@@ -10,8 +10,8 @@ With billions of users generating textual data every day, the World
 Wide Web has undisputedly become the most valuable and rich source
 of information when it comes to events with political, economical and
 societal relevance. As a matter of fact, this value has been recognized by
-many companies and institutions. \emph{Global Pulse} \cite{globalpulse}, an
-initiative of the United Nations, leverages textual data produced in social networks to predict job
+many companies and institutions. E.g., \emph{Global Pulse} \cite{globalpulse},
+an initiative of the United Nations, leverages textual data produced in social networks to predict job
 losses and spending reductions in given regions.
 \emph{Google Flu Trends} and \emph{Google Dengue Trends} \cite{googlefludengue},
 two projects started by \emph{Google}, estimate the development of Flu and Dengue fever based on \emph{Google} search
@@ -68,8 +68,8 @@ to compensate the lack of the labeled samples?
 \section{Proposed Method}
 \label{sec:introduction:proposed-method}
 \subsection{Word Embeddings}
-In recent years Milokov et al. introduced \emph{word emebddings}, a technique to
-represent words as vectors in a continuous low dimensional vector space. 
+In recent years Milokov et al. introduced \emph{word emebddings}
+\cite{mikolov2013distributed}, a technique to represent words as vectors in a continuous low dimensional vector space. 
 A particular property of this approach is that the angle
 between two word vectors is a measure of how dissimilar the respective words are from a
 semantical point of view.
@@ -159,7 +159,11 @@ classifier with important information for the underlying classification task.
 \subsection{Distributional Information}
 When substituting terms, relying on the semantic similarity between
 words might not always yield the desired effect on classification
-accuracy. Consider the following example of word frequencies:
+accuracy. As a matter of fact, the decision of whether to substitute
+a word with a semantically similar word depends on the underlying
+classification task.
+E.g, assume a TC task in which the goal is discriminate good from enthusiastic
+movie reviews. Let the word frequencies for an hypothetical training dataset be the following:
 
 \begin{center}
 \begin{tabular}{l|l|l}
@@ -175,7 +179,7 @@ substitution, the \emph{distributional information} strongly suggests otherwise:
 the terms are distributed differentely among the classes and substituting ``good'' with
 ``excellent'' would result in a loss of information that is relevant to 
 discrimination. 
-This phenomenon can be observed in most classification tasks and
+This phenomenon can be observed in many classification tasks and
 should not be neglected. Therefore, in our method we also propose to use 
 the information provided by word distributions as a criterion for good term 
 replacements. 
@@ -185,31 +189,34 @@ replacements.
 The main contributions of this work are the following:
 
 \begin{itemize}
-  \item We derive a new \textbf{distributional word similarity measure}.
+  \item We derive a new \textbf{distributional word distance measure}.
    
   \item Using a probabilistic framework, both the semantic similarity
   measure of word vectors and our distributional similarity are \textbf{combined into a novel
-  word distance similarity}.
+  word distance measure}.
   
   \item A method is provided to use our similarity in connection with a state of
-  the art clustering algorithm to preprocess textual data prior to
+  the art clustering algorithm to \textbf{preprocess textual data} prior to
   classification.
+
+  \item We show the our method allows to \textbf{improves classification
+  accuracy} in cases in which labeled data is scarce
 \end{itemize}
 
-As opposed to approaches described in \cite{baker1998distributional}, which
-either used semantic similarity or distributional similarity to perform term substitutions, 
-the novelty of our approach lies in the fact that \emph{both} measures are used in
-combination. 
+As opposed to approaches described in \cite{wang2016semantic,
+baker1998distributional}, which either used semantic similarity or distributional similarity 
+to perform term substitutions with no or little effect on classification
+accuracy, the novelty of our approach lies in the fact that \emph{both} measures
+are used in combination. Moreover, by doing so we show that our method
+outperforms state of the art approaches in various classification tasks. 
 
 We argue that especially when labeled data is scarce, the
-improvement in classification accuracies using our method should be all the more evident. Figure
-\ref{fig:hyptohesis} qualitatively shows the predicted classification accuracies with datasets preprocessed 
-with our method compared to unpreprocessed datasets. Moreover, since our
-approach reduces statistical bias due to the lack of enough training samples, our method opens
-the possibility to use features with higher information content, such as \emph{$N$-Grams} 
+improvement in classification accuracies using our method should be all the more evident. Moreover, since our
+approach reduces the statistical bias due to the lack of enough training
+samples, our method opens the possibility to use features with higher information content, such as \emph{$N$-Grams} 
 and \emph{PoS-Tags} (see Chapter \ref{ch:problem-analysis}), even when it would normally result in 
-highly sparse feature vectors. This allows to achieve improvements in TC even
-with larger datasets.
+highly sparse feature vectors. This can allow to achieve improvements in TC
+even with larger datasets in the future.
 
 \section{Structure}
 In Section \ref{sec:formalization} text classification is introduced formally,
