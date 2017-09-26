@@ -3,126 +3,348 @@
 
 \section{Datasets}
 
-To evaluate the effectiveness of the proposed method, we conducted experiments
-on 11 short text datasets, of which seven were provided by echobot GmbH and four
+In order to evaluate the effectiveness of the proposed method, we conducted experiments
+on 11 short text datasets, of which seven were provided by Echobot GmbH and four
 are publicly available and have been used in experiments of previous research.
-The following description of each dataset follows. A summary of some statistical
-data about the datasets can be viewed in Table \ref{tbl:dataset}. 
+We proceed on describing each dataset used for evaluation. A summary of additional information about
+the employed datasets can be viewed in Table \ref{tbl:datasets}. 
 
 \subsection{Business Signals}
 
-The datasets provided by echobot are a collection of short text snippets used
-for training of \emph{busisness signals} classifiers (see Section
+The datasets provided by Echobot are a collection of short text snippets used
+for training of \emph{business signals} classifiers (see Section
 \ref{sec:echobot}).
 For the evaluation of our method we used the training datasets for seven different business signals. 
-All seven datasets are in written, non-colloquial german language. Each
+All seven datasets are in written, non-colloquial German language. Each
 document has an average length of approximately 20 words. The task is to
 discriminate positive from negative samples, where negative samples were chosen
-to be particurlarly hard to discriminate from the positive samples by a domain expert.
+to be particularly hard to discriminate from the positive samples by a domain expert.
 The business signals evaluated in this work are the following:
 
 \begin{itemize}
   \setlength\itemsep{0.1em}
-  \item \textbf{\textit{Change of management}}: Snippets of news about change of
-  mangement personell in a company.
-  \item \textbf{\textit{Company Expansion}}: Snippets of news about expansions of
-  companies.
-  \item \textbf{\textit{Company Merger}}: Snippets of news about company
+  \item \textbf{\textit{Change of management} (E-CM)}: Snippets of news about
+  change of management personnel in a company.
+  \item \textbf{\textit{Company Expansion} (E-CE)}: Snippets of news about
+  expansions of companies.
+  \item \textbf{\textit{Company Merger} (E-CME)}: Snippets of news about company
   mergers.
-  \item \textbf{\textit{Raffle}}: Shorts excerpts from websites that offer a prize game. 
-  \item \textbf{\textit{Exhibition attendancy}}: Snippets of news or short excerts from
-  company websites announcing an attendancy at an exhibition or fair.
-  \item \textbf{\textit{Product recall}}: Short news reports about companies recalling
-  products from the market.
-  \item \textbf{\textit{Offer of Employment}}: Short job offer announcements or
-  job descriptions.
+  \item \textbf{\textit{Raffle} (E-RF)}: Shorts excerpts from websites that
+  offer a prize game.
+  \item \textbf{\textit{Exhibition attendance} (E-EA)}: Snippets of news or
+  short excerpts from company websites announcing an attendance at an exhibition or fair.
+  \item \textbf{\textit{Product recall}(E-PR)}: Short news reports about
+  companies recalling products from the market.
+  \item \textbf{\textit{Offer of Employment}(E-OE)}: Short job offer
+  announcements or job descriptions.
 \end{itemize}
 
-More details about the datasets are displayed in Table \ref{tbl:dataset}. 
+More details about the datasets are displayed in Table \ref{tbl:datasets}. 
 
 \subsection{Public datasets}
 
-We used the following publicly available english text snippet datasets for
+We used the following publicly available English text snippet datasets for
 evaluation:
 
 \begin{itemize}
-  \item \textbf{\textit{Customer Reviews}}: Short product reviews in colloquial
-  English. The task is to discriminate good and bad reviews.
+  \item \textbf{\textit{Customer Reviews} (CR)}: Short product reviews in
+  colloquial English. The task is to discriminate good and bad reviews.
   \item \textbf{\textit{MPQA}}: A collection of short 2-3 word phrases. The task is to
   classify them based on their polarity (positive, negative).
-  \item \textbf{\textit{Subjectivity}}:  Positive/negative subjective reviews and plot
-  summaries.
-  \item \textbf{\textit{RT}}: Short movie reviews with one sentence per review.
-\end{itemize}
-
-We also evaluated our method on larger datasets:
-\begin{itemize}
-  \item \textbf{\textit{RT-2k}}: A standard dataset containing 2000
-  positive/negative movie reviews in full length.
-  \item \textbf{\textit{Atheism vs Religion}} \&  \textbf{\textit{Windows vs
-  Graphics}}:
-  Pairs of categories taken from the 20-newsgroups dataset. The dataset consists of
-  messages exchanged in 20 different mail newsgroups. In the datasetd used in
-  this work, the email headers were removed.
+  \item \textbf{\textit{Subjectivity} (Subj.)}:  Positive/negative subjective
+  reviews and plot summaries.
+  \item \textbf{\textit{Short Movie Reviews} (RT)}: Short movie reviews with one
+  sentence per review.
 \end{itemize}
 
 Since the computation of a dissimilarity matrix of bigrams requires more memory
-than was available on our machine, we used smaller versions of datasets, by
-randomly selecting a fraction of the samples. In Table \ref{tbl:datasets} 
-datasets that were shrunk are indicate by the suffix ``-S''.
-  
+than was available on our machine, we used smaller versions of datasets \textit{Subjectivity} (Subj.)
+and \textit{Short Movie Reviews} (RT), by
+randomly selecting a fraction of the samples. In Table \ref{tbl:datasets}, 
+datasets that were shrunk are indicated by the suffix ``-S''.\footnote{The publicly available datasets evaluated in this work, were downloaded at \url{https://github.com/sidaw/nbsvm}}
+
+\begin{table}
+\centering
+
+\begin{tabular}{l|llllllll}
+\textbf{Dataset}  & |D|    & $|V_1|$ & $|V_2|$ & $|O_1|$ & $|O_2|$ & $\ell$ & $|D_+|$ & $|D_-|$ \\ \hline
+\textbf{E-RF}     & 636    & 3,750   & 9,258   & 2,958   & 7,929   & 20     & 510     & 126     \\
+\textbf{E-EA}     & 751    & 3,982   & 10,099  & 2,954   & 8,752   & 20     & 563     & 188     \\
+\textbf{E-CME}    & 712    & 4,253   & 9,588   & 3,277   & 8,352   & 18     & 339     & 373     \\
+\textbf{E-PR}     & 960    & 5,241   & 13,073  & 4,051   & 11,387  & 20     & 427     & 533     \\
+\textbf{E-OE}     & 734    & 5,399   & 13,506  & 3,930   & 11,518  & 29     & 608     & 126     \\
+\textbf{E-CE}     & 1,444  & 8,166   & 22,015  & 6,725   & 19,602  & 21     & 723     & 721     \\
+\textbf{E-CM}     & 1,714  & 9,691   & 24,926  & 7,382   & 21,601  & 21     & 1,081   & 633     \\
+\hline
+\textbf{MPQA}     & 10,603 & 6,298   & 22,049  & 6,171   & 21,974  & 3      & 3,311   & 7,292   \\
+\textbf{CR}       & 3,772  & 6,596   & 36,860  & 5,629   & 35,359  & 20     & 2,406   & 1,366   \\
+\textbf{RT*}       & 10,662 & 20,621  & 114,909 & 17,042  & 112,846 & 21     & 5,331   & 5,331   \\
+\textbf{RT-S}     & 2,666  & 9,086   & 33,614  & 8,033   & 33,058  & 21     & 1,341   & 1,325   \\
+\textbf{Subj.*}    & 10,000 & 23,187  & 126,853 & 19,553  & 124,789 & 24     & 5,000   & 5,000   \\
+\textbf{Subj.-S}  & 2,500  & 10,037  & 36,241  & 8,969   & 35,686  & 24     & 1,242   & 1,258   \\  
+\end{tabular}
+\caption{Legend: $|D|$: size of dataset, $|V_1|$: number of unigrams, $|V_2|$: number of bigrams, 
+				 $|O_1|$: overlap of unigrams with word2vec vocabulary, $|O_2|$: overlap of bigrams with word2vec vocabulary,
+				 $\ell$: average document length (in unigrams), $|D_+|$: positive samples, $|D_-|$: negative samples. The datasets
+				 annotated with an asterisk were not evaluated. Instead we reduced subsets of the latter (RT-S and Subj-S).}
+\label{tbl:datasets}
+\end{table}
 \subsection{Tokenization}
 
 All datasets were were tokenized using NLTK's TwitterTokenizer, since it has a
-better recognition of tokens written in natural language. E.g. In case of
-Hashtags it tokenizes the character \# and the following word as two tokens, instead of one.
+better recognition of tokens in written colloquial language. E.g. In case of
+Hash-tags it tokenizes the character \# and the following word as two tokens, instead of one.
 Other features include the recognition of parenthesis, i.e. if a token
 appears in parenthesis like e.g. ``(token)'' it will be tokenized as ``(``,
-``token'', ``)''. This allows for better coverage of words in the pretrained
-word embeddings.
+``token'', ``)''. This tokenization allows for a greater overlap with words in the pretrained
+word embeddings. We didn't exclude special characters or punctuation symbols and also didn't 
+remove any stop-words in our datasets.
 
 \section{Pretrained Word Embeddings}
 
-We used two different word embeddings for the evaluation, one for English and
-one for German datasets. For the English datasets we used google's pretrained
-Word2Vec model\footnote{Downloadable at
-\url{https://code.google.com/archive/p/word2vec/}}. It was trained on a part of
-Google's News dataset, which contains around 100 billion words. The final model consists 3000000 word vectors of
-dimensionality 300. [Parameters?]
+We used two different SGNS \emph{word2vec} word embedding models for the evaluation, 
+one for English and one for German datasets. For the English datasets we used Google's pretrained
+word2vec model. It was trained on a part of
+Google's News dataset, which contains around 100 billion words. The final model consists $3,000,000$ word vectors of
+dimensionality 300. \footnote{Details and download at \url{https://code.google.com/archive/p/word2vec/}}
 
-We trained a German word2vec model using a german news
-corpus from 2013 containing about 600 million words.\footnote{Downloadable at
-\url{http://www.statmt.org/wmt14/training-monolingual-news-crawl/}} For
-training we used the python library gensim . The vectors were trained using
-the skip-gram model. We used negative sampling with 10 samples, a window size of
-5 and ignored all words with a total frequency lower than 50.  The
-resulting 600000 word vectors are of dimension 300. 
+For German datasets, we trained a German \emph{word2vec} model using a German news
+corpus from 2013 containing about 600 million words.\footnote{The training corpus is downloadable at
+\url{http://www.statmt.org/wmt14/training-monolingual-news-crawl/}. For preprocessing and training, we used the code available 
+at \url{http://devmount.github.io/GermanWordEmbeddings/}} For
+training we the python library gensim was used. We used negative sampling with 10 samples, 
+a window size of 5 and ignored all words with a total frequency lower than 50.  The
+resulting $600\,000$ word vectors are of dimension 300. 
 
 \section{Experimental Setup}
 
 \subsection{Training-Test Splits}
 
-We split the datasets in training and test datasets using 10-Fold and 2-Fold cross
-validation.
-In order to average out random effects, for each dataset we ran the
-$k$-Fold cross validation process three times, each time with different
-training-test splits.
+We split the datasets in training and test datasets using $10$-Fold cross validation.
+In order to average out random effects, for each dataset we ran the cross validation process 
+\emph{three times}, each time with different training-test splits.
 
+\subsection{Unigrams nd Bigrams}
 
-\subsection{Paramter Search}
-For each dataset the optimal parameter combination was obtained via grid search. 
-Since our method uses a different parameter set for each size of $N$-grams, in
-order to find the best parameter combination for $N$-Grams we used the best
-parameter combination found for $(N-1)$-Grams. E.g. assume that for a dataset
-the we found the best parameter combination for unigrams $\alpha_1^*,
-\beta_1^*, K_1^*$. Our goal is to find the best combination for dataset with
-affixed bigrams. Therefore, in order to have less parameter combinations to
-search, for the parameter search on the bigram dataset, we fix the
-parameters for unigram clustering to $\alpha_1^*, \beta_1^*, K_1^*$, since we
-know that they worked best for unigrams. Subsequently, we conduct a grid
-search only on bigram clustering parameters.
+Additionally to evaluating each dataset in its unigram representation, we added 
+also added bigrams as described in Section \ref{sec:complex-ling-feat}. 
+
+\subsection{Preprocessing and Parameter Search}
+\label{ssec:preprocessing-parameter-search}
+We preprocessed the training dataset using Algorithm \ref{alg:preprocess-training-data}. 
+Unknown documents were preprocessed as illustrated in Algorithm \ref{alg:preprocess-unknown-data}. 
+
+The algorithm for finding clusters of similar terms, operates on unigrams and bigrams separately.
+Therefore, it requires separate a parameter set $K_N, \alpha_N, \beta_N$ and $\theta_{d,N}$ for each $N=1,2$, i.e.
+for unigrams and bigrams respectively. For each dataset and $N=1,2$, the optimal parameter combination was obtained via grid search.
+We first conducted a grid search on the unigrams datasets. 
+By keeping the best parameter combination found for unigrams fixed, we then proceeded on searching over a grid of parameters for bigrams.
+
+For unigrams, we searched on all combinations of the following parameters, but excluding 
+combinations for which $\beta_1 = 0,\alpha_1 \neq 0$ \footnote{When $\beta=0$ the parameter $\alpha$ has no effect.} 
+
+\begin{equation*}
+\begin{split}
+	\boldsymbol K_1 &= \left\{ 0, 0.25, 0.5, 0.75, 0.9 \right\} \\
+	\boldsymbol \alpha_1 &= \left\{ 0, 0.25, 0.5, 0.75, 1 \right\} \\
+	\boldsymbol \beta_1 &= \left\{0, 0.1, 0.3, 0.5, 0.7, 1 \right\} \\
+	\boldsymbol \theta_{d,1} &= \left\{ 0, 0.55, 2 \right \} \\	
+\end{split}	      
+\end{equation*} 
+
+For bigrams we searched the following parameters and analogously to unigrams, excluded combinations for varying values of $\alpha_2$ 
+if $\beta_2 = 0$
+
+\begin{equation*}
+\begin{split}
+	\boldsymbol K_2 &= \left\{ 0.25,  0.5, 0.75\right\} \\
+	\boldsymbol \alpha_2 &= \left\{0, 0.5, 0.75, 1 \right\} \\
+	\boldsymbol \beta_2 &= \left\{ 0, 0.1, 0.5, 1 \right\} \\
+	\boldsymbol \theta_{d,2} &= \left\{ 0, 0.55, 2 \right \}  \\
+\end{split}	      
+\end{equation*}
+
+Instead of indicating the absolute amount of clusters, we use $K$ as fraction of terms to which the resulting
+preprocessed dataset is reduced. E.g. $K_1=0.25$ means that the unigrams in the dataset are reduced to $0.25 \cdot |V_1|$, where $|V_1|$ is the number
+unigrams in the corresponding dataset.
+  
+In total, we searched over 156 parameter combinations for unigrams and 54 parameter combinations for bigrams. 
+ 
+\subsection{Classifiers}
+For classification, we used the MNB classifier provided by the Machine Learning Toolbox of Matlab R2017a.
+Furthermore, we also used the Matlab implementation of the NBSVM as proposed in \cite{wang2012baselines}. 
+We parameterized it with the default NBSVM parameter $\beta = 0.25$ (see Section \ref{sec:nbsvm}). 
+\footnote{A Matlab implementation of the NBSVM is available at \url{https://github.com/sidaw/nbsvm}.}   
 
 \section{Results}
 
-The efficacy of our method was measured with the classification accuracy, i.e.
-the ratio of correctly classified to classified samples in total. 
+Tables \ref{tbl:results-10-fold-NBSVM-acc} and \ref{tbl:results-10-fold-MNB-acc} show the result of the triple 10-fold cross validation 
+for NBSVM and the MNB Classifier respectively. We report the results achieved 
+with the \emph{best parameter combination} that we found with the grid search described in the previous section. 
+For each fold, the effectiveness of classification was assessed by measuring the \emph{classification accuracy}, i.e. the fraction of correctly classified samples over 
+the total number of classified samples. Where applicable, we also indicate the baselines provided by Wang et al. in \cite{wang2012baselines}. 
+The accuracies reported in the results tables, are the mean accuracies over all the folds of the triple 10-fold cross validation.
+Additionally to the achieved classification accuracies for, in Table \ref{tbl:all-stds-and-accs} we report the standard deviation of the accuracies over all folds.
+ 
+\begin{table}
+\centering
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|lllll|llll}
+\hline 
+ \multicolumn{10}{c}{Support Vector Machine with Naive Bayes Features (NBSVM)}\\
+\hline 
+                 & \multicolumn{5}{c}{\textbf{Parameters}}        & \multicolumn{4}{c}{\textbf{Mean accuracy over $3\times10$-fold CV}}                            \\\hline
+\textbf{Dataset} & $K_N$  & $\alpha_N$ & $\beta_N$ & $\theta_{d,N}$ & N-Grams & Original   & \multicolumn{2}{c}{\textbf{Our Method}}  & Wang et al. \cite{wang2012baselines} \\ \hline
+\textbf{E-CE}    & 0.75 & 0        & 0       & 2        & 1       & 81.7\% & \textbf{82.7\%} &$+1.0 \%$        & -                                    \\
+                 & 0.75 & 1        & 0.1     & 2        & 2       & 80.5\% & \textbf{84.1\%} &$+3.6 \%$        & -                                    \\ \hline
+\textbf{E-CM}    & 0.25 & 1        & 0.1     & 2        & 1       & 87.2\% & \textbf{88.4\%} &$+1.2 \%$        & -                                    \\
+                 & 0.75 & 1        & 0.1     & 2        & 2       & 90.4\% & \textbf{92.1\%} &$+1.7 \%$        & -                                    \\ \hline
+\textbf{E-CME}   & 0.25 & 1        & 0.1     & 0.55     & 1       & 82.2\% & \textbf{85.3\%} &$+3.1 \%$        & -                                    \\
+                 & 0.5  & 1        & 0.1     & 2        & 2       & 84.2\% & \textbf{86.1\%} &$+1.9 \%$        & -                                    \\ \hline
+\textbf{E-RF}    & 0.75 & 1        & 0.3     & 0        & 1       & \textbf{90.7\%} & 90.6\% &$-0.1 \%$        & -                                    \\
+                 & 0.75 & 1        & 0.5     & 2        & 2       & 90.8\% & \textbf{91.4\%} &$+0.6 \%$        & -                                    \\ \hline
+\textbf{E-EA}    & 0.9  & 0.25     & 1       & 2        & 1       & 85.1\% & \textbf{88.9\%} &$+3.8 \%$        & -                                    \\
+                 & 0.5  & 1        & 0.1     & 2        & 2       & 86.8\% & \textbf{91.4\%} &$+3.6 \%$        & -                                    \\ \hline
+\textbf{E-PR}    & 0.75 & 0.25     & 1       & 2        & 1       & 91.8\% & \textbf{93.2\%} &$+1.4 \%$        & -                                    \\
+                 & 0.75 & 0.5      & 1       & 0.55     & 2       & 92.4\% & \textbf{93.4\%} &$+1.0 \%$        & -                                    \\ \hline
+\textbf{E-OE}    & 0.25 & 1        & 0.3     & 0        & 1       & 90.9\% & \textbf{92.9\%} &$+2.0 \%$        & -                                    \\
+                 & 0.75 & 1        & 0.5     & 2        & 2       & 93.7\% & \textbf{95.2\%} &$+1.5 \%$        & -                                    \\ \hline \hline
+\textbf{CR}      & 0.5  & 1        & 0.3     & 0.55     & 1       & 80.1\% & \textbf{81.3\%} &$+1.2 \%$        & 80.5\% $+0.8\%$                     \\
+                 & 0.75 & 1        & 0.1     & 2        & 2       & 80.3\% & \textbf{82.5\%} &$+2.2 \%$        & 81.8\% $+0.7\%$                     \\ \hline
+\textbf{RT-S}    & 0.75 & 1        & 0.1     & 0.55     & 1       & 77.7\% & \textbf{78.5\%} &$+2.2 \%$        & -                                    \\
+                 & 0.75 & 1        & 0.1     & 2        & 2       & 78.2\% & \textbf{79.3\%} &$+1.1 \%$        & -                                    \\ \hline
+\textbf{MPQA}    & 0.5  & 0.25     & 1       & 2        & 1       & 82.4\% & \textbf{85.6\%} &$+3.2 \%$        & 85.3\% $+0.3\%$                     \\
+                 & 0.75 & 0.75     & 1       & 0        & 2       & 83.4\% & \textbf{87.7\%} &$+4.3 \%$ 	      & 86.3\% $+1.3\%$                     \\ \hline
+\textbf{Subj.-S} & 0.5  & 0        & 0.1     & 0.55     & 1       & 92.5\% & \textbf{93.8\%} &$+1.3 \%$	      & -                                    \\
+                 & 0.25 & 1        & 0.1     & 2        & 2       & 92.8\% & \textbf{94.8\%} &$+2.0 \%$        & -                                    \\ \hline
+\end{tabular}
+}
+\caption{NBSVM classification accuracies of our method compared to unpreprocessed datasets. ight next to the classification accuracies, preceded by ``$+$/$-$'', we indicate the gain/loss in classification accuracy 
+achieved with our method. The only dataset performing worse than state-of-the-art is \textbf{E-RF} ($-0.1\%$). However, with bigrams our method performs better ($+0.6\%$).
+We outperform the baseline accuracy reported in Wang et al. \cite{wang2012baselines} on the datasets CR and MPQA (rightmost column).}
+\label{tbl:results-10-fold-NBSVM-acc}
+\end{table}
+
+\begin{table}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|lllll|llll}
+\hline 
+ \multicolumn{10}{c}{Multinomial Naive Bayes (MNB)}\\
+\hline                       & \multicolumn{5}{c}{\textbf{Parameters}}        & \multicolumn{4}{c}{\textbf{Mean accuracy over $3\times10$-fold CV}}                            \\ \hline
+\textbf{Dataset} & $K_N$  & $\alpha_N$ & $\beta_N$ & $\theta_N$ & N-Grams & Original & \multicolumn{2}{c}{\textbf{Our Method}} & Wang et al. \cite{wang2012baselines} \\ \hline
+\textbf{E-CE}    & 0.5  & 1        & 0.3     & 0.55     & 1       & 79.0\% & \textbf{80.9\%} & $+1.9\%$ & -                                    \\
+                 & 0.5  & 1        & 0.1     & 2        & 2       & 79.5\% & \textbf{82.8\%} & $+3.3\%$ & -                                    \\\hline
+\textbf{E-CM}    & 0.5  & 0.75     & 1       & 0        & 1       & 86.3\% & \textbf{87.0\%} & $+0.7\%$ & -                                    \\
+                 & 0.5  & 0.75     & 1       & 0        & 2       & 89.0\% & \textbf{89.7\%} & $+1.9\%$ & -                                    \\\hline
+\textbf{E-CME}   & 0.25 & 1        & 0.1     & 0.55     & 1       & 82.0\% & \textbf{84.2\%} & $+2.2\%$& -                                    \\
+                 & 0.5  & 1        & 0.1     & 2        & 2       & 83.0\% & \textbf{86.4\%} & $+3.4\%$& -                                    \\\hline
+\textbf{E-RF}    & 0.5  & 0.25     & 1       & 0        & 1       & 86.7\% & \textbf{88.2\%} & $+1.5\%$& -                                    \\
+                 & 0.5  & 0.75     & 1       & 0.55     & 2       & 89.4\% & \textbf{90.9\%} & $+1.5\%$& -                                    \\\hline
+\textbf{E-EA}    & 0.25 & 0.25     & 1       & 0        & 1       & 97.4\% & \textbf{98.1\%} & $+0.7\%$& -                                    \\
+                 & 0.75 & 1        & 0.5     & 0.55     & 2       & 96.5\% & \textbf{98.4\%} & $+0.9\%$& -                                    \\\hline
+\textbf{E-PR}    & 0.25 & 1        & 0.3     & 2        & 1       & 90.3\% & \textbf{92.3\%} & $+2.0\%$& -                                    \\
+                 & 0.75 & 1        & 0.5     & 2        & 2       & 92.6\% & \textbf{93.8\%} & $+1.2\%$& -                                    \\\hline
+\textbf{E-OE}    & 0.25 & 1        & 0.5     & 0.55     & 1       & 92.8\% & \textbf{93.7\%} & $+0.9\%$& -                                    \\
+                 & 0.75 & 1        & 0.1     & 2        & 2       & 89.7\% & \textbf{94.7\%} & $+5.0\%$& -                                    \\\hline \hline
+\textbf{CR}      & 0.5  & 1        & 0.3     & 0.55     & 1       & 79.2\% & \textbf{80.6\%} & $+1.4\%$& 79.8\% $+0.8\%$                              \\
+                 & 0.5  & 1        & 0.5     & 2        & 2       & 81.0\% & \textbf{81.6\%} & $+0.6\%$& 80.0\% $+1.6\%$                     \\\hline
+\textbf{RT-S}    & 0.5  & 1        & 0.1     & 0        & 1       & 77.2\% & \textbf{77.5\%} & $+0.3\%$& -                                    \\
+                 & 0.5  & 1        & 0.1     & 2        & 2       & 77.4\% & \textbf{78.1\%} & $+0.7\%$& -                                    \\\hline
+\textbf{MPQA}    & 0.25 & 1        & 0.5     & 2        & 1       & 84.0\% & \textbf{86.1\%} & $+2.1\%$& 85.3\% $+0.7\%$                     \\
+                 & 0.75 & 0.75     & 1       & 2        & 2       & 79.2\% & \textbf{87.3\%} & $+8.1\%$& 86.3\% $+1.0\%$                     \\\hline
+\textbf{Subj.-S} & 0.75 & 0        & 0.1     & 0.55     & 1       & 92.3\% & \textbf{93.7\%} & $+1.4\%$& -                                    \\
+                 & 0.75 & 1        & 0.1     & 2        & 2       & 93.4\% & \textbf{95.0\%} & $+1.6\%$& -                                    \\\hline
+\end{tabular}
+}
+\caption{MNB classification accuracies of our method compared to unpreprocessed datasets. 
+For each dataset, the best performance is printed in \textbf{bold}. 
+Right next to the classification accuracies, preceded by ``$+$/$-$'', we indicate the gain(+)/loss(-) in classification accuracy 
+achieved with our method. With MNB our method always performs better than with the original dataset.
+We outperform the baseline accuracy reported in Wang et al. \cite{wang2012baselines} on the datasets CR and MPQA (rightmost column).}
+\label{tbl:results-10-fold-MNB-acc}
+\end{table}
+
+                                                                                  
+\begin{table}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ll|ll|ll|ll|ll}
+\hline
+                 && \multicolumn{4}{c|}{NBSVM}                                     & \multicolumn{4}{c}{MNB}                                       \\ \hline
+                 && \multicolumn{2}{c}{Original} & \multicolumn{2}{c|}{\textbf{Our Method}} & \multicolumn{2}{c}{Original} & \multicolumn{2}{c}{\textbf{Our Method}} \\ \hline
+\textbf{Dataset} &N-Grams & Acc.        & Std.           & Acc.         & Std.            & Acc.        & Std.           & Acc.         & Std.            \\ \hline
+\textbf{E-CE}    &1& $81.7\%$    & $\pm 3.0\%$    & $82.7\%$     & $\pm 2.9\%$*    & $79.0\%$    & $\pm 3.7\%$    & $80.9\%$     & $\pm 2.8\%$*    \\
+                 &2& $80.5\%$    & $\pm 4.8\%$    & $84.1\%$     & $\pm 3.1\%$*    & $79.5\%$    & $\pm 2.7\%$*   & $82.8\%$     & $\pm 3.4\%$     \\ \hline
+\textbf{E-CM}    &1& $87.2\%$    & $\pm 2.3\%$    & $88.4\%$     & $\pm 2.3\%$     & $86.3\%$    & $\pm 2.4\%$*   & $87.0\%$     & $\pm 2.5\%$     \\
+                 &2& $90.4\%$    & $\pm 1.5\%$*   & $92.1\%$     & $\pm 1.6\%$*    & $89.0\%$    & $\pm 2.1\%$    & $89.7\%$     & $\pm 1.8\%$*    \\\hline
+\textbf{E-CME}   &1& $82.2\%$    & $\pm 4.0\%$    & $85.3\%$     & $\pm 3.5\%$     & $82.0\%$    & $\pm 4.2\%$    & $84.2\%$     & $\pm 3.8\%$*    \\
+                 &2& $84.2\%$    & $\pm 4.4\%$    & $86.1\%$     & $\pm 2.8\%$*    & $83.0\%$    & $\pm 3.7\%$    & $86.4\%$     & $\pm 3.4\%$*    \\\hline
+\textbf{E-RF}    &1& $90.7\%$    & $\pm 2.5\%$*   & $90.6\%$     & $\pm 2.6\%$     & $92.8\%$    & $\pm 3.3\%$    & $93.7\%$     & $\pm 2.9\%$*    \\
+                 &2& $90.8\%$    & $\pm 2.7\%$*   & $91.4\%$     & $\pm 2.7\%$*    & $89.7\%$    & $\pm 4.3\%$    & $94.7\%$     & $\pm 3.1\%$*    \\\hline
+\textbf{E-EA}    &1& $85.1\%$    & $\pm 2.8\%$    & $88.9\%$     & $\pm 2.7\%$*    & $86.7\%$    & $\pm 2.7\%$    & $88.2\%$     & $\pm 2.6\%$*    \\
+                 &2& $86.8\%$    & $\pm 2.5\%$*   & $91.4\%$     & $\pm 3.2\%$     & $89.4\%$    & $\pm 2.9\%$*   & $90.9\%$     & $\pm 3.2\%$     \\\hline
+\textbf{E-PR}    &1& $91.8\%$    & $\pm 5.4\%$    & $93.2\%$     & $\pm 2.3\%$*    & $90.3\%$    & $\pm 3.4\%$    & $92.3\%$     & $\pm 3.1\%$*    \\
+                 &2& $92.4\%$    & $\pm 4.4\%$    & $93.4\%$     & $\pm 4.1\%$*    & $92.6\%$    & $\pm 3.1\%$    & $93.8\%$     & $\pm 2.3\%$*    \\\hline
+\textbf{E-OE}    &1& $90.9\%$    & $\pm 2.7\%$*   & $92.9\%$     & $\pm 2.8\%$     & $97.4\%$    & $\pm 1.6\%$*   & $98.1\%$     & $\pm 1.7\%$     \\
+                 &2& $93.7\%$    & $\pm 1.6\%$*   & $95.2\%$     & $\pm 1.8\%$     & $96.5\%$    & $\pm 2.0\%$    & $98.4\%$     & $\pm 1.2\%$*    \\\hline\hline
+\textbf{CR}      &1& $80.1\%$    & $\pm 1.9\%$    & $81.3\%$     & $\pm 1.7\%$*    & $79.2\%$    & $\pm 1.9\%$    & $80.6\%$     & $\pm 1.8\%$*    \\
+                 &2& $80.3\%$    & $\pm 1.8\%$    & $82.5\%$     & $\pm 1.3\%$*    & $81.0\%$    & $\pm 1.9\%$    & $81.6\%$     & $\pm 1.7\%$*   \\\hline
+\textbf{RT-S}    &1& $77.7\%$    & $\pm 2.3\%$    & $78.5\%$     & $\pm 2.2\%$*    & $77.2\%$    & $\pm 2.3\%$*   & $77.5\%$     & $\pm 2.5\%$     \\
+                 &2& $78.2\%$    & $\pm 1.7\%$*   & $79.3\%$     & $\pm 2.1\%$     & $77.4\%$    & $\pm 2.1\%$*   & $78.1\%$     & $\pm 2.3\%$     \\\hline
+\textbf{MPQA}    &1& $82.4\%$    & $\pm 1.2\%$    & $85.6\%$     & $\pm 1.0\%$*    & $84.0\%$    & $\pm 1.0\%$    & $86.1\%$     & $\pm 0.9\%$*    \\
+                 &2& $83.4\%$    & $\pm 1.2\%$    & $87.7\%$     & $\pm 1.0\%$*    & $79.2\%$    & $\pm 1.2\%$    & $87.3\%$     & $\pm 0.9\%$*    \\\hline
+\textbf{Subj.-S} &1& $92.5\%$    & $\pm 1.9\%$    & $93.8\%$     & $\pm 1.5\%$*    & $92.3\%$    & $\pm 1.6\%$*   & $93.7\%$     & $\pm 1.6\%$*    \\
+                 &1& $92.8\%$    & $\pm 1.9\%$    & $94.8\%$     & $\pm 1.3\%$*    & $93.4\%$    & $\pm 1.6\%$    & $95.0\%$     & $\pm 1.4\%$*    \\\hline
+\end{tabular}
+}                                                                             
+\caption{For comparison purposes we report the results of NBSVM and MNB in one place. We also include the stanard deviation of over accuracies of each fold. 
+It is noteworthy, that standard deviation values are almost always lower with datasets preprocessed with our method. We believe that his is an indicator that after 
+applying term clustering with our novel semantic-distributional word distance, the trained classification is model better at generalizing the 
+classification task. For MNB and NBSVM we separately marked the 
+\emph{lowest} standard deviation with an asterisk*.}
+\label{tbl:all-stds-and-accs}                                                                           
+\end{table}                                                                                          
+
+\subsection{Discussion}
+
+As can be easily seen in Tables \ref{tbl:results-10-fold-NBSVM-acc} and \ref{tbl:results-10-fold-MNB-acc} our method outperforms state-of-the-art classification in \emph{all
+datasets} evaluated. In the following sections, we argue that these are \emph{real} improvements in the underlying classification tasks and not due to random effects.
+
+\subsubsection{Excluding random effects}
+ In order to exclude that performance increase was due to random effects and the large number of searched parameters combinations, we repeated the 10-fold cross-validation 3 times, 
+i.e. each parameter combination has been tested 30 times for each dataset, each time with a different training-test split. Therefore, we argue that after such
+a high amount of repetitions the performance boost is very unlikely to be originating from random effects. 
+
+\subsubsection{Classification with our method is more stable}
+We also wanted to asses the robustness of our method and at the same time exclude extreme oscillations in classification accuracy in each fold. 
+For this purpose we also computed the stanadard deviation of the accuracy. As can be seen in Table \ref{tbl:all-stds-and-accs}, for almost all evaluation runs 
+(i.e., $30$ out of $44$, if we consider bigrams datasets separately), the standard deviation from the accuracy is smaller in datasets preprocessed with our method. 
+This is an indicator that classification performance is more stable, since it fluctuates less around the mean performance. We argue that this is due to the fact that the 
+effect of unfrequent noisy terms is reduced by the word frequency combination implied in the usage of BoC (see Sections \ref{sec:complex-ling-feat}, \ref{sec:lex-sub-boc}, \ref{ssec:importance-word-frequencies}). 
+Moreover, since the dimensionality of the dataset is reduced to a fraction $K$, we can expect that classification models trained on datasets preprocessed with our method, will be less prone 
+to detrimental effects like overfitting. \cite{sebastiani2002machine}. 
+ 
+\subsubsection{Bigrams and beyond}
+Our results confirm what is reported in \cite{wang2012baselines} by Wang et al.: Bigrams improve classification accuracy. 
+It is noteworthy, that in classification with MNB, performance increase with our method is magnified when using bigrams. E.g., for the dataset \textbf{E-CME} 
+\emph{(Company Mergers)} the performance increase with unigrams is $+2.4\%$ and with bigrams it raises to $+3.4\%$ (see also \textbf{E-CE}, \text{E-CM}, etc.).
+This effect is even more extreme in \textbf{E-OE} \emph{(Offer of employment)} and \textbf{E-EA} \emph{(Exhibition Attendancy)}: while the performance with 
+bigrams in the original dataset drops in comparison to the unigram dataset, with our preprocessed dataset, classification accuracy is increased further. 
+Due to this effect, we imagine that the feature dimensionality reduction, makes it more viable to operate with more complex linguistic features 
+on extremely small datasets. Therefore, future work could assess the possibility to improve classification accuracy with our method on larger scale datasets, by
+first reducing the feature dimensionality as we proposed and the adding features with higher information content, such as larger $N$-Grams or PoS-Tags or by clustering directly 
+using word embeddings trained on phrases, PoS-Tags or dependecy based features \cite{komninos2016dependency, liu2015learning}.   
+
+\subsubsection{Parameter Choice}
+and what effect the choice of parameter has.
+Since the distributional properties change from dataset to dataset, it is expected that the best parameter chioce also varies with the 
+classification task.  From our experience, a we suggest to choose $\alpha$ close to $1$ and $0.1 \leq \beta \leq 0.3$. 
+Depending on whether unigrams or bigrams are used, $K$ should be chosen bigger and smaller respectively. Also, the distance threshold for OOV-words $\theta_d$
+should be chosen smaller for unigrams than for bigrams. Nevertheless, we propose that in the future it would be useful to further research if there are possibilities
+to estimate or to learn the best parameter choice from properties of the observed data.
+
+  
+ 
+     

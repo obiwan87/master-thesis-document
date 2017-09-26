@@ -11,4 +11,18 @@
 %% Version 1.3, 2016-12-29
 
 \Abstract
-Deutsche Zusammenfassung
+
+Als Textklassifikation (TK) bezeichnet man die Problemstellung, textuelle Daten vordefinierten Klassen oder Kategorien zuzuordnen. 
+TK ist nicht nur Gegenstand vieler wissenschaftlicher Arbeiten, sondern auch von immer größerer praktischer Bedeutung 
+für Industrie und Wirtschaft. Die Prädiktionsfähigkeit dieser Systeme beruht hauptsächlich auf der Qualität und vor allem aber auch 
+auf der Quantität der Daten, mit denen diese trainiert werden. In vielen Fällen müssen diese Trainingsdaten manuell erzeugt, bzw.
+gekennzeichnet werden, was häufig einen beträchtlichen zeitlichen und finanziellen Aufwand bedeutet.  
+Oft ist es nicht praktikabel, die eigentlich optimale Anzahl an Trainingsdaten manuell zu erzeugen und es muss
+auf einen kleineren Trainingsdatensatz zurückgegriffen werden. In dieser Arbeit wird eine Methode vorgestellt, 
+welche die Klassifizierungsgenauigkeit gerade in solchen Szenarien verbessern kann. 
+Erreicht wird dies durch eine neue \emph{semantisch-statistische Wort-Distanzmetrik}.
+In Kombination mit Clustering-Algorithmen kann diese Metrik verwendet werden, um den Merkmalsraum unter 
+Beibehaltung der Semantik zu reduzieren.  Eine besondere Eigenschaft des neuen Distanzmaßes ist die Kombination semantischer 
+Information aus Word Embeddings \cite{mikolov2013distributed} mit intrinsischen, statistischen Eigenschaften der Trainingsdaten. Die in dieser Arbeit vorgestellte 
+ Methode wurde mit State-of-the-Art Klassifikatoren wie Multinomial Naive Bayes und Support Vektor Maschinen evaluiert. Im Gegensatz zu 
+ existierenden Ansätzen (Wort-Clustering \cite{baker1998distributional, ma2015using}) konnten hier Verbesserungen in allen getesteten Datensätzen erzielt werden.

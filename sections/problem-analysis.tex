@@ -32,21 +32,21 @@ d^{(j)} = w_j, j=1,\ldots, |d|
 
 We also introduce the \emph{domain of documents} $\mathcal{D}$ and the
 \emph{domain of words} $\mathcal{V}$, that define the infinite sets of all possible
-documents and all possible words respecitively, i.e. $D \subset \mathcal{D}$ and $V \subset
+documents and all possible words respectively, i.e. $D \subset \mathcal{D}$ and $V \subset
 \mathcal{V}$.
 
-For a set of documents $D=\{d_1,\ldots,d_{|D|}\}$ we also define the
-a function that extracts all words contained in the documents of the dataset:
+For a set of documents $D=\{d_1,\ldots,d_{|D|}\}$ we also define a
+function that extracts all words contained in the documents of the dataset:
 \begin{equation*}
 \begin{split}
 \mli{voc}&: \mathcal{P}(\mathcal{D}) \to \mathcal{P}(\mathcal{V}) \\
-\mli{voc}&(D) = \left\{d(j) \mid d \in D, j =
+\mli{voc}&(D) = \left\{d^{(j)} \mid d \in D, j =
 1,\ldots,|d|\right\}
 \end{split}
 \end{equation*}
 
-The set $V=\mli{voc}(D)$ is also called the vocabulary of $D$.
-Analogously the vocabulary of a single documents is denoted as
+The set $V=\mli{voc}(D)$ is also called the \emph{vocabulary of }$D$.
+Analogously, the vocabulary of a single documents is denoted as
 
 \begin{equation*}
 \mli{voc}(d) \coloneqq \mli{voc}(\{d\})
@@ -57,14 +57,14 @@ Analogously the vocabulary of a single documents is denoted as
 Let $\Omega=\left\{\omega_1, \omega_2,\ldots,\omega_{|\Omega|}\right\}$ be the
 set of classes defined for the current classification problem. A document set
 $D$ is called a \emph{labeled dataset} if there is a function $\omega: D \to
-\Omega$, that assigns a labeled to each document $d \in D$. We call the function
-$\omega$ a \emph{labelling over} $D$. If not specified otherwise, a dataset
-identified with $D$ is a labeled dataset with labelling $\omega$.
+\Omega$, that assigns a label to each document $d \in D$. We call the function
+$\omega$ a \emph{labeling over} $D$. If not specified otherwise, a dataset
+identified with $D$ is a labeled dataset with labeling $\omega$.
 On the other hand, \emph{unlabeled documents} or \emph{unknown documents} are
-the the documents $\tilde{d} \in \mathcal{D}\setminus D$. 
+the documents $\tilde{d} \in \mathcal{D}\setminus D$. 
 
-The labelling $\omega$ is usually predefined by a domain expert
-that manually preclassified the documents.
+The labeling $\omega$ is usually predefined by a domain expert
+that manually pre-classifies the documents.
 It is important to note that in this work each document has exactly one and only
 one class associated to it. The subset of documents in a class $\omega \in
 \Omega$ is denoted as:
@@ -84,7 +84,7 @@ solving several binary classification problems.}
 
 \subsection{Word Frequencies}
 
-Let $N_{v,d}$ be the amount of occurences of word $v \in \mathcal{V}$ in a
+Let $N_{v,d}$ be the amount of occurrences of a word $v \in \mathcal{V}$ in a
 document $d$, i.e.
 
 \begin{equation*}
@@ -93,14 +93,14 @@ N_{v,d} \coloneqq \sum\limits_{j=1}^{|d|} \mathbb{1}\{d^{(j)} = v\} \\
 
 where $\mathbb{1}\{\cdot\}$ denotes the characteristic function.
 
-Also, let $N_{v,\omega}^D$ refer to the number of occurences of word $v$ 
-in documents $d \in D$ with label $\omega(d) = \omega$:
+Also, let $N_{v,\omega}^D$ refer to the number of occurrences of word $v$ 
+in documents $d \in D$ with label $\omega(d) = \omega$
 
 \begin{equation*}
 N_{v,\omega}^D \coloneqq \sum\limits_{d \in D_\omega} N_{v,d}
 \end{equation*}
 
-The total amount of occurences of $v$ in a dataset $D$ is denoted as 
+The total amount of occurrences of $v$ in a dataset $D$ is denoted as 
 
 \begin{equation*}
 	N_v^D = \sum\limits_{d \in D} N_{v,d}
@@ -115,20 +115,20 @@ statistics yielded by words frequencies to predict the class of a document.
 This implies transforming the textual data in a numerical representation
 containing statistical information on the word frequencies in a labeled dataset.
 One of the most used statistical document representations in text classification is the so called
-\emph{Bag-of-Words (BoW)} [citation needed].
+\emph{Bag-of-Words (BoW)} \cite{mccallum1998comparison, Joachims1998}.
 A document $d$ can be represented as a BoW in the following way
 
 \begin{equation*}
 \begin{split}
 V = \left\{ v_1, \ldots, v_{|V|} \right\} \subset \mathcal{V} \\
-\mli{bow}(V): \mathcal{D} \to \mathbb{N}^{|V|} \eqqcolon \mathcal{B}_V \\
-\mli{bow}(d; V) \coloneqq \left(N_{d,v_1},  \ldots,
+\mli{bow}_V: \mathcal{D} \to \mathbb{N}^{|V|} \eqqcolon \mathcal{B}_V \\
+\mli{bow}_V(d) \coloneqq \left(N_{d,v_1},  \ldots,
 N_{d,v_{|V|}})\right)^\intercal
 \end{split}
 \end{equation*}
 
 In other words, a BoW is a vector of positive integers and zero, whose
-dimensionality equals the size of the vocabulary $V$. The $j$-th element of the
+dimension equals the size of the vocabulary $V$. The $j$-th element of the
 BoW vector indicates the frequency of word $v_j \in V$ in document $d$. We use
 $\mathcal{B}_V$ denote the feature space defined by a BoW over a vocabulary $V$.
 
@@ -137,10 +137,10 @@ defined as follows:
 
 \begin{equation*}
 \begin{split}
- \mli{bbow} &: \mathcal{D} \to \{0,1\}^{|V|} \coloneqq \mathcal{B}_V^{b} \\
-\mli{bbow}(d) &\coloneqq (\mathbb{1}\{b_1 > 0\},\ldots,\mathbb{1}\{b_{|V|} >
+ \mli{bbow}_V &: \mathcal{D} \to \{0,1\}^{|V|} \coloneqq \mathcal{B}_V^{b} \\
+\mli{bbow}_V(d) &\coloneqq (\mathbb{1}\{b_1 > 0\},\ldots,\mathbb{1}\{b_{|V|} >
 0\})\\
-(b_1, \ldots, b_{|V|})^\intercal &\coloneqq \mli{bow(d; V)}
+(b_1, \ldots, b_{|V|})^\intercal &\coloneqq \mli{bow_V(d)}
 \end{split}
 \end{equation*}
 
@@ -150,16 +150,17 @@ otherwise. The corresponding feature space is denoted as $\mathcal{B}_V^{b}$.
 
 Generally, we speak of a BoW model when the order in which the words occur in a
 document is neglected and instead only the presence or the frequency of word
-occurences is modelled. Classification based on this model is widely spread in
-TC applications [citation needed]. As a baseline to compare our results with, we
+occurrences is modeled. Classification based on this model is widely spread in
+TC applications \cite{Joachims1998, mccallum1998comparison}. As a baseline to compare our results with, we
 introduce two of the most used and successful classifiers in text classification that are based
-on the BoW model, namely the Multinomial Naive Bayes Classifier [citation
-needed] and the linear Suppor Vector Machine (SVM) with Naive Bayes features,
+on the BoW model, namely the Multinomial Naive Bayes Classifier \cite{Eyheramendy2003}
+ and the linear Support Vector Machine (SVM) with Naive Bayes features,
 the latter of which was introduced in \cite{wang2012baselines}.
 
-\subsubsection{Multinomial Naive Bayes Classification} The Multinomial Naive
-Bayes (MNB) classifier is a probabilistic classifier that performs
-classification by estimating the probability of a class given a document. 
+\subsubsection{Multinomial Naive Bayes Classification} 
+\label{sssec:mnb}
+The Multinomial Naive Bayes (MNB) classifier is a probabilistic classifier that
+performs classification by estimating the probability of a class given a document. 
 By the \emph{Bayesian rule} this probability is:
 
 \begin{equation}
@@ -176,7 +177,7 @@ are called
 \end{equation*}
 
 The likelihood $\Pr(d\given \omega)$ is given by the
-probabilities of the words occuring in $d$:
+probabilities of the words occurring in $d$:
 
 \begin{equation}
 \label{eq:likelihood-full}
@@ -184,7 +185,7 @@ probabilities of the words occuring in $d$:
 \end{equation}
 
 However, in Naive Bayes (NB) models the ``naive'' assumption is made that word
-occurences are conditionally indpendent, i.e. it is assumed that
+occurrences are conditionally independent, i.e. it is assumed that
 
 \begin{equation*}
 \label{eq:naive-bayes-assumption}
@@ -192,12 +193,12 @@ occurences are conditionally indpendent, i.e. it is assumed that
 \Pr(d^{(i)} \given \omega)
 \end{equation*}
 
-Despite this assumption being wrong, NB models perform suprisingly
+Despite this assumption being wrong, NB models perform surprisingly
 well in many classification tasks. A proof of why this is
 the case can be found in \cite{zhang2004optimality}.
 
 In MNB learning, the probabilities in equation \ref{eq:nb-bayes-rule} are
-estimated using observations yielded by labeled dataset $D$. 
+estimated using observations yielded by a labeled dataset $D$. 
 An estimate for the prior $\Pr(\omega)$ is given by the
 relative frequency of positive/negative samples over the total amount of
 samples in the labeled dataset:
@@ -216,32 +217,32 @@ D_\omega}N(v,d)}{|V| + \sum\limits_{k=1}^{|V|} \sum\limits_{d' \in D_\omega}
 N(v_k,d')} = \frac{1 + N(v,\omega)}{|V| + \sum\limits_{v' \in V} N(v', \omega)}
 \end{equation}
 
-In the equation above, estimates of the word probabilities are given by the
+In the equation above, the estimate of a word probability $\hat{P}(v \given \omega)$ is given by the
 total count of a word in class $\omega$ (numerator) divided by the counts of all
 words in that class (denominator). The summands $1$ in the numerator and $|V|$
-in the denominator, are added to avoid zero- probabilities, in case a word
+in the denominator, are added to avoid zero-probabilities, in case a word
 doesn't appear in $\omega$. This is also called \emph{Laplacian Smoothing}. The
 rationale behind smoothing is that even when words do not appear in a
 class $\omega'$, their true probability $\Pr(v \given \omega)$ is in fact
 greater than 0.
 Estimating the probability of a word to be zero is an underestimate, which
-Laplacian smoothing compensates by slightly overestimating the word probabilties. 
-[citation needed]
+Laplacian smoothing compensates by slightly overestimating the word probabilities. 
+\cite{mccallum1998comparison}.
 
-Using equations \ref{eq:estimate-word-prob} and \ref{eq:priors} and the naive
-bayes assumption \ref{eq:naive-bayes-assumption} we can estimate the posterior
+Using equations \ref{eq:estimate-word-prob} and \ref{eq:priors} and the Naive
+Bayes assumption \ref{eq:naive-bayes-assumption}, we can estimate the posterior
 probability $\Pr(d \given \omega)$:
 
 \begin{equation}
 \begin{split}
 \hat{P}(\omega \given d) \propto \hat{P}(\omega)\hat{P}(d\given \omega)
-&= P(\omega)\prod\limits_{j=1}^{|d|} P(d(j) \given \omega) \\ &\eqqcolon
+&= P(\omega)\prod\limits_{j=1}^{|d|} P(d^{(j)} \given \omega) \\ &\eqqcolon
 \ell(d,\omega)
 \end{split}
 \end{equation}
 
-Note, that is equivalent to estimating the probability of a bag-of-words vector
-if we assume that the features are all conditionally independent from each other:
+Note, that is equivalent to estimating the probability of a BoW vector $bow(d) = (b_1,\ldots,b_{|V|})$
+if we assume that the features $b_i, i=1,\ldots,|V|$ are all conditionally independent from each other:
 
 \begin{equation}
 \begin{split}
@@ -253,8 +254,8 @@ if we assume that the features are all conditionally independent from each other
 \end{split}
 \end{equation}
 
-A Naive Bayes \emph{classifier} is a function $c_{nb}$ that assigns a document the
-class whose term $\ell(d, \omega)$ is larger, i.e
+A Naive Bayes \emph{classifier} is a function $c_{nb}$ that assigns a document to the
+class for which the term $\ell(d, \omega)$ is greater, i.e
 
 \begin{equation}
 \begin{split}
@@ -265,25 +266,29 @@ c_{nb}(d) &= \begin{cases} + & \text{if~} \ell(d,+) > \ell(d,-) \\ - &
 \end{split}
 \end{equation}
 
-Note that since the eveidence $\Pr(d)$ (see Equation
+Note that since the evidence $\Pr(d)$ (see Equation
 \ref{eq:nb-bayes-rule}) does not depend on the class $\omega$, it is enough to
 compute the term $\ell(d,\omega)$ to establish which posterior probability is
 larger. In case that both classes are equally probable (third case), a class is
 chosen randomly. 
 
-\subsubsection{Linear SVM with Naive Bayes features}
+\subsubsection{Linear SVM with Naive Bayes features (NBSVM)}
+
+\label{sec:nbsvm}
 
 In \cite{wang2012baselines} Wang et al. introduced the linear SVM with Naive
-Bayes features (NB-SVM). In this section, we simply give a summary of the
-findings reported in \cite{wang2012baselines}. For a more detailed description
-of the rationales behind the design of the NB-SVM and for SVMs in general see
-[citations needed].
+Bayes features (NBSVM). They show that their SVM model is especially well-suited and robust for 
+many classification task. In \ref{ch:Evaluation}, we use NBSVM as a state-of-the-art to classifier 
+to establish a baseline to which we compare the performance of the method introduced in this work.  
+In this section, we simply give a summary of the findings reported in \cite{wang2012baselines}. For a more detailed description
+of the rationales behind the design of the NBSVM and for SVMs in general consult
+\cite{vapnik2013nature}.
 
 As opposed to the standard approach of using a linear SVM to
-classify documents in the feature space of BoWs [citation needed], they propose
+classify documents in the feature space of BoWs \cite{mccallum1998comparison}, Wang et al. propose
 to use the log-ratios of word frequencies as feature vectors. 
 For a document $d$ in a labeled dataset $D$ with vocabulary $V = voc(D) = \{v_1, \ldots, v_{|V|} \}$ and classes
-$\Omega = {+, -}$ this is:
+$\Omega = \{+, -\}$ this is:
 
 \begin{equation*}
 \begin{split}
@@ -298,7 +303,7 @@ $\Omega = {+, -}$ this is:
 \end{split}
 \end{equation*}
 
-Here $\alpha$ denotes a Laplacian Smoothing parameter and $\circ$ denotes the
+Here $\alpha$ denotes the Laplacian Smoothing parameter and $\circ$ denotes the
 elmentwise vector multiplication.  
 The vector representation $\mathbf{f}(d)$ of a document is used to train the
 weights $\mathbf{w}$ and the bias $b$ on a $L2$-regularized SVM by minimizing the following expression
@@ -341,43 +346,44 @@ parameters $\alpha, \beta$ Wang et al. propose $\alpha = 1$ and $\beta =
 \nicefrac{1}{4}$.
 They perform experiments on various datasets using BoW representations
 of unigrams and bigrams (see Section \ref{sec:complex-ling-feat}) and
-experimentally show that the NB-SVM performs better than the Naive Bayes classifier and the standard linear SVM trained on bBoW features.
+experimentally show that the NBSVM performs better than the Multinomial Naive Bayes classifier 
+and the standard linear SVM trained on bBoW features.
 
-\subsection{Word Embeddings}
+\subsection{Word Embeddings: The Skip-Gram-Model}
+\label{sec:skip-gram-model}
 
-\subsubsection{Word2Vec}
-Word embeddings are a more recent approach to represent words as numerical
-vectors. In \cite{mikolov2013distributed} Milokov et al. introduced
-\textit{Word2Vec}. They propose to generate word vectors with a shallow learning
-network that estimates the probability $\Pr(w_O\given w_I)$ of an output word
-$w_O$ given its context $w_I$. The context $w_I$ is defined by the words
-surrounding $w_O$ within a symmetrical window size $k$. This is done by scanning
-the training corpus in blocks of contiguous sequences of $2k + 1$ words and
-using the middle word as input $w_I$ and the surrounding words as $w_O$. The network is trained in an 
-unsupervised fashion by using a possibly large and topically heterogeneous text
-corpus, e.g. the first billion words of \emph{Wikipedia} [citation needed].
+\subsection{Model Overview}
+\emph{The Skip-Gram-Model (SG)} was recently introduced by Mikolov et al. as a word embedding
+approach for representing words as numerical vectors, also known as \emph{word2vec}. 
+In \cite{mikolov2013distributed} Mikolov et al. propose to generate word vectors with 
+a shallow learning network that estimates the probability $\Pr(w_O\given w_I)$ of a context
+$w_I$ given an input word $w_O$. The context $w_O$ is defined by the words
+surrounding $w_I$ within a symmetrical window size $k$. This means that a 
+large training corpus is scanned in blocks of contiguous sequences of $2k + 1$ words. 
+The middle word is used as the output $w_O$  of the network, while the surrounding words as $w_O$ as the input. 
+The network is trained in an unsupervised fashion by using a possibly large and topically heterogeneous text
+corpus, e.g. the first billion words of \emph{Wikipedia}.
 
-The result of the training is a word embedding $\mathcal{W}=\left(V_{\mathcal{W}}, (\mathbf{x}_\mathcal{W}^{(i)})\right)$ 
+The result of training is a word embedding $\mathcal{W}=\left(V_{\mathcal{W}}, (\mathbf{x}_\mathcal{W}^{(i)})\right)$ 
 with vocabulary $V_{\mathcal{W}} = \left\{ v_{\mathcal{W}}^{(1)}, \ldots,
 v_\mathcal{W}^{(|V_\mathcal{W}|)} \right\} $ and corresponding word vectors
 $x_\mathcal{W}^{(i)} \in \mathbb{R}^d, i=1,\ldots, |V_{\mathcal{W}}|$, each of
-which represents a word $v \in V_\mathcal{W}$ in a $d$-dimensional real-valued vector space. Note that the dimensionality of the vector space is chosen as a parameter prior to the training process. An often
-used and empirically well working dimensionality seems to be $d=300$ [citation
-needed].
+which represents a word $v \in V_\mathcal{W}$ in a $d$-dimensional real-valued vector space. 
+
 We denote the vector representation of a word in the vocabulary of the word
 embedding as follows:
 
 \begin{equation*}
 \begin{split}
-\mli{vec}: V_\mathcal{W} \to \mathbb{R}^d \\
-\mli{vec}(v^i_{\mathcal{W}}) = \mathbf{x}_i
+\mli{vec}_{\mathcal{W}}: V_\mathcal{W} \to \mathbb{R}^d \\
+\mli{vec}_{\mathcal{W}}(v^i_{\mathcal{W}}) = \mathbf{x}_{\mathcal{W}}^{(i)}
 \end{split}
 \end{equation*}
 
 \subsubsection{Linguistic properties}
-As reported in \cite{mikolov2013distributed} the vector representations
-of words can be used to measure the semantic similarity between words. This can
-be done by computing the angle between two word vectors:
+As reported in \cite{mikolov2013distributed}, the vector representations yielded by word embedding models, such as \emph{word2vec},
+can be used to measure the semantic similarity between words. For this purpose, Mikolov et al. 
+suggest to use the angle between two word vectors:
 
 \begin{gather*}
 \mli{\text{cos-sim}}: \mathbb{R}^d \times \mathbb{R}^d \to [-1, 1] \\
@@ -387,26 +393,24 @@ be done by computing the angle between two word vectors:
 \end{gather*}
 
 This measure is referred to as \emph{cosine similarity}, since it is
-equivalent to calculating the cosine of the angle between two vectors. In the
-embedding word vector space it, ranges from $-1$ (unrelated words) to $1$
-(identical words). Table \ref{tbl:word2vec-examples} shows the cosine
-distances for some word pairs. The distances were computed with word vectors
-from the pretrained word embeddings model provided by google. It is noteworhty
-that the words ``hot'' and ``cold'' are very close to each other, even though
-they are antonyms. This is due to the fact, that words are mapped close to each
-in the embedding vector space, if they are used in similar contexts. Therefore,
-the semantic similarity yielded by word embeddings is more of a topical nature.
+equivalent to calculating the cosine of the angle between two vectors in the
+embedding word vector space. It ranges from $-1$ (unrelated words) to $1$
+(identical words). A known issue with word embeddings is that antonyms, such as ``hot'' and ``cold'', 
+are mapped very close to each other, even though they bear opposite meanings. 
+This is a direct implication of how the word vectors are generated by the learning network: if words are often used in similar contexts, 
+their representation in the word vector space will be similar. Therefore, rather than being based on synonymie,  
+the semantic similarity yielded by word embeddings is more of topical nature \cite{lu2015deep}.
 
 \subsubsection{Word distance measure}
-A measure for word \emph{dissimilarity} can be expressed by
-using the \emph{cosine distance}:
+If the cosine similarity expresses the relatedness between two words, the \emph{cosine distance} can be employed
+as produce values for dissimilarity. The cosine distance is defined as follows 
 
 \begin{gather*}
 \mli{\text{cos-dist}}: \mathbb{R}^d \times \mathbb{R}^d \to [0, 2] \\
 \mli{\text{cos-dist}} \equiv 1 - \mli{\text{cos-sim}}
 \end{gather*}
 
-Note that strictly speaking, the cosine distance is not
+Note that strictly speaking, the latter is not
 a \emph{metric} since it does not satisfy the \emph{triangle
 inequality}, i.e.
 
@@ -421,7 +425,7 @@ However, whenever this work refers to a \emph{distance} with respect to
 words or word vectors, we refer to a measure that expresses their dissimilarity
 such as the just introduced cosine distance.
 
-For an embedding $\mathcal{W}=(V_{\mathcal{W}}, \mathbf{x}_i)$ we define the
+For an embedding $\mathcal{W}=(V_{\mathcal{W}}, \mathbf{x}_\mathcal{W}^{(i)})$ we define the
 following word distance measure:
 
 \begin{equation*}
@@ -436,7 +440,7 @@ V_{\mathcal{W}}
 \end{split}
 \end{equation*}
 
-In the definition above we simply normalized the cosine distance to $[0,1]$,
+In the definition above, we simply normalized the cosine distance to $[0,1]$,
 which will be useful later in this work. Moreover, if one of the two words
 is not covered by the word embeddings model, the distance function
 returns an ``infinite'' distance. We use the symbol ``$\infty$''
@@ -446,35 +450,26 @@ return the distance $0$, whether they are part of the word embeddings model or
 not.
 
 \begin{table}
-\begin{tabular}{|l|l|l|}
+\centering
+\begin{tabular}{|l|l|}
+\textbf{Notation} & \textbf{Description}  \\
 
-\textbf{Notation} & \textbf{Description} & \textbf{Example} \\
-
-$\mathcal{D}$ & set of all possible documents & \\
-$\mathcal{V}$ & set of all possible words & \\
-$D$ & set of preclassified documents & $D=\{ d_1, d_2\} = $\{('Hello', 'world'),
-('Hello') \} \\
-
-$D_\omega$ & set of documents of class $\omega$ & $D_+ = \left\{
-\text{('Hello', 'world')} \right\}$ \\
-& & $D_- = \left\{ \text{('Hello')} \right\}$ \\
-
-$V = \mli{voc}(D)$ & vocabulary of $D$ & $V=$\{'Hello', 'world'\} \\
-$\tilde{V}$ & OOV words $\mathcal{V} \setminus V$ &  \\
-$N_{v,d}$ & counts of word $v$ in document $d$ & $N_{\text{'Hello'}, d_1} = 1,\
-N_{\text{'world'}, d_2} = 0$
-\\
-
-$N_v^D$ & number of documents containing word $v$ & $N_{\text{'Hello'}}^D = 2$
-\\
-
-$N_{v,\omega}^D$ & counts of $v$ in $D_\omega$ & $N_{'world', -}^D = 0$ \\
-
-$\mli{bow}(d; V)$ & BoW of document $d$ over vocabulary $V$ & $\mli{bow}(d_1; V)
-= (1, 1)^\intercal,\ \mli{bow}(d_2; V) = (1,0)^\intercal$ \\
+$\mathcal{D}$ & set of all possible documents \\
+$\mathcal{V}$ & set of all possible words  \\
+$D$ & set of labeled documents \\
+$D_\omega$ & set of documents of class $\omega$ \\ 
+$V = \mli{voc}(D)$ & vocabulary of $D$ \\
+$\tilde{V}$ & OOV words $\mathcal{V} \setminus V$ \\
+$N_{v,d}$ & counts of word $v$ in document $d$ \\
+$N_v^D$ & number of documents containing word $v$ \\ 
+$N_{v,\omega}^D$ & counts of $v$ in $D_\omega$ \\
+$\mli{bow}(d; V)$ & BoW of document $d$ over vocabulary $V$ \\
+$\mathcal{W}=(V_\mathcal{W}, (\mathbf{x}_i))$ & Word embedding with vocabulary $V_\mathcal{W}$ and vectors $\mathbf{x}_i$ \\
+$\mli(vec)(v)$ & Word vector for $v \in V_\mathcal{W}$ \\
+$\mli{dist}(v,v') \in [0,1]\cup \{\infty\}$ & normalized distance between word vectors for $v$ and $v'$ \\ 
 
 \end{tabular}
-\caption{Formalization of \emph{TC}: Overview of Notations}
+\caption{Overview of Notations}
 \label{tab:notations}
 \end{table}
 
@@ -484,11 +479,11 @@ $\mli{bow}(d; V)$ & BoW of document $d$ over vocabulary $V$ & $\mli{bow}(d_1; V)
 \subsubsection{N-Grams}
 \label{sssec:n-grams}
 In BoW representations, the order in which words occur in a document is
-neglected. Inspite of this, representing documents as BoWs has proven
-to work reasonably well for many text classification tasks. A possible reason why this approach works, is
-that the statistics of word occurences provide a good measure for predicting
-the class of a document. E.g., the Naive Bayes classifier estimates the
-posterior probability $\Pr(\omega\given d)$ of a class $\omega$ given a document $d$ by essentially counting the occurences 
+neglected. In spite of this, representing documents as BoWs has proven
+to work reasonably well for many text classification tasks \cite{mccallum1998comparison}. 
+A possible reason why this approach works, is that the statistics of word occurrences provide a good measure for predicting
+the class of a document. E.g., the Multinomial Naive Bayes classifier estimates the
+posterior probability $\Pr(\omega\given d)$ of a class $\omega$ given a document $d$ by essentially counting the occurrences 
 of each word for each class (see Section \ref{sec:statistical-tc}).
 
 However, the order in which words occur can often yield important information
@@ -497,10 +492,10 @@ it's good" and ``it's no good" within a sentiment analysis task. Despite
 expressing the opposite sentiment, in their BoW representation
 with the vocabulary $V = \left\{\text{'no', 'it's', 'good'} \right\}$ 
 the two sentences would be identical and thus impossible to distinguish for a
-classifier that operates on Bag-Of-Words.
+classifier that operates on the BoWs model.
 
 A technique that is commonly used to represent the local order
-of words is to include \emph{$N$-grams}. In text classification, an $N$-gram is
+of words is the utilization \emph{$N$-grams}. In text classification, an $N$-gram is
 a contiguous sequence of $N$ words from a given document. $N$-grams of size one are called
 \emph{unigrams}, of size two \emph{bigrams}, and of size three \emph{trigrams}.
 $N$-grams for $N > 3$ are referred to as four-grams, five-grams, six-grams, etc.
@@ -546,7 +541,7 @@ day </s> \\
 \end{tabular}
 \end{center}
 
-We define the $N$-Grams represantion of a document for $N=n$ as follows:
+We define the $N$-Grams representation of a document for $N=n$ as follows:
 
 \begin{equation*}
 \begin{split}
@@ -565,8 +560,9 @@ As in \cite{wang2012baselines, furnkranz1998study}, whenever we use $N$-grams of
 size $N$ for text classification, a document is represented by concatenating it
 with all representations of $k$-Grams with $k \leq N$. E.g., if we use trigrams, then the bigrams and the
 unigrams are also included in the document representation. 
-We define the operation of adding $N$-Grams up to a size $N$ to a
-document as
+We define the operation of enriching a document with $N$-Grams up to a
+size of $N$ as
+
 
 \begin{equation*}
 \begin{split}
@@ -597,7 +593,7 @@ V_N^* &\coloneqq V \cup \bigcup\limits_{n=2}^N  V_n \\
 
 \subsubsection{Part-Of-Speech Tagging}
 Another approach to enrich BoW with additional information about the words
-contained in a document, is to so called \emph{Part-Of-Speech (PoS) tagging}.
+contained in a document, is so called \emph{Part-Of-Speech (PoS) tagging}.
 This refers to annotating each word with its grammatical function within the sentence it occurs.
 For our example sentence this would look like
 
@@ -615,8 +611,20 @@ day		  & \emph{noun} \\
 \end{tabular}
 \end{center}
 
-Generally speaking, PoS-Tagging implies adding linguistic and
-grammatical modifiers to tokens within a document:
+Depending on the classification task, PoS-Tagged terms can often yield
+hints for word sense disambiguation and thus increase their discriminatory
+value \cite{wilks1998grammar}. E.g., consider the following sentences in
+the context of a sentiment analysis task based on good/bad movie reviews:
+\begin{itemize}
+  \item ``I love this movie''
+  \item ``This is love story'' 
+\end{itemize}
+ 
+In this case, PoS-tagging could be used to distinguish whether ``love'' was used
+as an appreciative term, i.e. as a verb in the first person, or just in a
+descriptive fashion, in this case as a noun.
+
+Generally speaking, PoS-Tagging implies adding grammatical modifiers to words within a document:
 
 \begin{equation*}
 (v,m_1,m_2,\ldots,m_l) \in
@@ -624,11 +632,11 @@ V \times M_1 \times M_2 \times \ldots M_l
 \end{equation*}
 Which modifiers $M_j$ are used, depends on the implementation of the
 PoS-Tagger and the document language. Possible modifiers include the word
-type (noun, verb, adjective) to the morphological form (grammatical case,
+type (noun, verb, adjective), the morphological form (grammatical case,
 grammatical gender, grammatical number) and the grammatical function
 (subject, object, predicate) of the tagged word.
 
-A document $d \in D$ is then preprocessed as follows by a PoS-Tagger:
+A document $d \in D$ is preprocessed as follows by a PoS-Tagger:
 
 \begin{equation*}
 \begin{split}
@@ -647,11 +655,9 @@ the vocabulary is extended after the tagging process.
 V_P = \left\{ p_i^k \mid pos(d_i) = (p_1^i,\ldots,p_{|d|}^i), d_i \in D, 1 \leq
 k \leq |d_i| \right\}
 \end{equation*}
-As with $N$-Grams, usually
-the PoS-Tagged document is concantenated with original document and then
-represented as BoW.
 
 \section{Challenges in Text Classification}
+\label{sec:challenges}
 
 The complexity and variability of human language makes text
 classification a non-trivial task as it implies working in very high
@@ -661,39 +667,39 @@ Adding complex linguistic features increases the dimensionality even more. The
 problems resulting from high dimensional feature spaces are described in the
 following sections.
 
-\subsection{Unfrequent words and sparse Feature Vectors}
+\subsection{Infrequent words}
+\label{ssec:unfreq-words}
 
 In \cite{wang2012baselines} Wang et al. experimentally showed that just by
 affixing bigrams as described in Section \ref{sssec:n-grams}, classification
-accuracies can be slightly improved.
+accuracy can be significantly improved.
 Nonetheless, using $N$-\textit{grams} with $N > 2$ didn't make the
 classification accuracy better.
 One way to explain why this happens, is by considering how the
 statistics of each $N$-gram are affected, when $N$ grows.
 
-Assume a unigram $v$ appears $N_v$ times in a given dataset $D$. All bigrams
+Assume a unigram $v$ appears $N_v^D$ times in a given dataset $D$. All bigrams
 $(v,v')$ for $v' \neq v$ can't possibly occur more often than  $v$ itself.
-Generally speaking $N_{(v,v')} \leq N_v$.
-The same logic can be applied to $N$ and $N+1$ for $N >= 2$.\footnote{W.l.o.g.
+Generally speaking $N_{(v,v')^D} \leq N_v^D$.
+The same logic can be applied to $N$ and $N+1$ for $N >= 2$.\footnote{Without loss of generality, 
 this can also be said about bigrams $(v'',v)$ with $v '' \neq v$.} In the
 extreme case, when $N = \max_{d' \in D} |d'|$, then every $N$-gram occurs at most one time. In short,
 what we observe is that by building bigger and bigger $N$-grams the
-Bag-Of-Words represantion of documents $d \in D$ becomes more sparse, i.e. in
-proportion the number of zero-entries in a feature vector grows.
+BoW representation of documents $d \in D$ becomes more sparse, i.e. in
+proportion the number of zero-entries in a feature vector grows. A similar
+argument can be made for PoS-Tags, in which case the decreasing feature counts
+are due to combinatoric complexity introduced by the different Word-Modifier
+combinations.
 
-For count-based classifiers, this this might present a problem. In its
-frequentist interpretation, the probability of an event, in this case that an
+For classifiers based on the BoW model, this this might present a problem. 
+Let's consider what happens to the estimates of word probabilties in a NB model, 
+when using features of higher complexity such as $N$-Grams. 
+In its frequentist interpretation, the probability of an event, in this case that an
 $N$-gram $v$ appears in class $\omega$, is approximated by
-its relative frequency with respect to the counts of $v_k$ in the whole dataset:
-
-\begin{equation*}
-\Pr(v \given \omega) \approx \frac{1 + N(v,\omega)
-}{|V| + \sum\limits_{v'\in V} N(v',\omega)} =:
-\hat{P}(v \given \omega)
-\end{equation*}
-
-The main claim of frequentist probability theory is that for inifnite samples
-the relative frequency converges to the true underlying probability, in the same
+its relative frequency with respect to the counts of $v$ in the whole dataset
+(see Equation \ref{eq:estimate-word-prob} in Section \ref{sssec:mnb}). The
+main claim of frequentist probability theory is that for infinite samples the 
+relative frequency converges to the true underlying probability, in the same
 way as the relative frequency of throwing ``heads'' with a fair coin, will
 approach 0.5 with a growing number of coin throws. Therefore, as we consider the
 number of observed documents $|D|$ approaching infinity, we obtain
@@ -703,22 +709,19 @@ number of observed documents $|D|$ approaching infinity, we obtain
 }{|V| + \sum\limits_{v'\in V} N(v',\omega)}
 \end{equation*}
 
-With fewer occurences for each $N$-gram, the estimates for the word probabilities
+With small datasets $D$ and few occurrences for each $N$-gram, the estimates for the word probabilities
 become more biased due to the scarcity of observations. This phenomenon is also
 known as \emph{sampling error}. \footnote{If we assume a
-gaussian distribution, then the sampling error $\epsilon \in
+Gaussian distribution, then the sampling error $\epsilon \in
 \mathcal{O}(1/\sqrt{|D|})$, which implies that in order to halve the error one
 needs to enlarge the training set from $|D|$ to $|D|^2$ samples.} This error
 propagates to the estimated posterior probability $\hat{P}(\omega|d)$.
 The result is that words with low counts act like noise, which on average has no
 impact on classification accuracy at all or can even worsen a classifier's
-predictive ability. As a consequence, even though they contain more
+predictive ability \cite{saif2012alleviating}. As a consequence, even though they contain more
 information, arbitrarily adding higher order features such as $N$-grams or
 PoS-tags cannot be expected to be generally beneficial to text classification
-tasks. \footnote{What we here describe as statistical sparsity or sampling
-error can be also viewed as a special case of the \emph{curse of
-dimensionality}}
-
+tasks. 
 \subsection{Out of Vocabulary Words}
 \label{ssec:oov}
 
@@ -737,19 +740,19 @@ space. Formally these are the words
 \end{equation*}
 
 Note that, for the same reasons described in the previous section, when using
-complex higher features, OOV-words become even more frequent.
+complex linguistic features, OOV-words become even more frequent.
 
 \section{Case Study: Echobot}
 \label{sec:echobot}
 
 The detrimental effects of high dimensional feature spaces, make it difficult to
 use enriched features such as $N$-Grams and $PoS$-Tags in small datasets.
-An example of how these difficulties are overcome in a real-word scenarion
-can be found at \textit{Echobot}, a small German company that develops machine
+An example of how these difficulties are overcome in a real-word scenario
+can be found at \textit{Echobot}, a young German company that develops machine
 learning based tools for social media monitoring and sales.
 
 \subsection{Company description}
-Their goal is to offer their customers solutions that
+The company's goal is to offer their customers solutions that
 help oversee what the web is reporting about their products, their firm or
 their competitors, helping them to adjust their business strategy according
 to trends detected on the web. Web content is retrieved by a complex web crawler
@@ -763,10 +766,10 @@ extracts useful and relevant information for the customer.
 In one specific context, text classification is used to alert customers when
 newly published web content concerns a specific topic. E.g., one might
 be interested in knowing when a company of a specific industry is about to change
-their management personell or has announced a site closure.
+their management personnel or has announced a site closure.
 Events like this, also called \textit{business signals}, are of particular
 commercial interest for the customer. For example, it is known that a
-restructuring of a company's managing personell, is often followed by the purchase of new
+restructuring of a company's managing personnel, is often followed by the purchase of new
 services and products. With this knowledge at hand, a salesman that has been
 alerted of such event, could contact the company in question and make an offer
 before anyone else.
@@ -776,7 +779,7 @@ before anyone else.
 When classifying business signals, Echobot faces the same problems
 mentioned in the introductory chapter: labeled data is scarce and costly to produce,
 but nonetheless crucial for effective text categorization. Therefore, in order
-to optimize classification accuracy inspite of the scarcity of labeled data, Echobot developed
+to optimize classification accuracy in spite of the scarcity of labeled data, Echobot developed
 a semi-automated classification process that involves a human agent. Instead of
 building a classification model based on the raw textual data, a domain expert
 preprocesses the documents by annotating each sample with semantic and
@@ -790,128 +793,100 @@ effectiveness.
 
 \subsection{Manual preprocessing by a domain expert}
  
-The linguistic of the domain expert are leveraged for a twofold task:
+The linguistic skills of the domain expert are leveraged for a twofold task:
+On one hand, he selects among a pool of complex linguistic features that can be
+helpful for the underlying classification task. This is useful since, as 
+depicted in Section \ref{sec:challenges}, arbitrarily adding large numbers of
+features can be detrimental for classification effectiveness, due to the induced 
+statistical weakness of infrequent terms in high dimensional BoW feature spaces
+(see Section \ref{sec:challenges}).
 
-\begin{itemize}
-  \item The selection and combination of a pool of PoS-tags and $N$-grams and
-  other complex linguistic features
-  \item The creation of dictionaries of semantically related words that are used
-  to for substituting words in the dataset
-\end{itemize}
+On the other hand, the domain expert makes use of dictionaries of semantically
+related words to reduce the dimensionality and make infrequent terms
+statistically more robust by substituting them with semantically related words. 
 
- 
- 
+An ideal solution would be to automate both tasks. However, feature selection is
+a topic that has been studied in numerous previous research (see Chapter
+\ref{ch:related-work}). At the same time, thanks to the growth in
+computational power and since the introduction of distributional
+word represantations such as \emph{word2vec} \cite{mikolov2013distributed}, automatically
+assessing semantic word similarity has become viable for many applications.
+Nonetheless, the question of whether word embeddings can be useful in increasing
+text classification accuracy, has not been studied exhaustively yet. Therefore,
+while aiming to derive an automated preprocessing method, in the following
+sections we will describe in more detail how the domain expert preprocesses 
+the dataset using groups of semantically related words and how this
+can be beneficial to classification tasks.
 
 \subsubsection{Dictionary based word substitutions}
+\label{ssec:dict-based-lex-sub}
 
-We can describe the operations of the domain expert formally as follows:
-let $D$ be a set of documents containing $N$-grams $V_N^*$ and
-PoS-Tags $V_P$ such that $V = V_N^* \cup V_P$.
-The operator's task is to combine the available $N$-grams and PoS-Tags
-such that the resulting feature space reflects his understanding
-of semantics for the underlying classification task.
-More formally, this implies the creation of a list of rules
-$\boldsymbol{\rho} = (\rho_1, \rho_2, \ldots, \rho_n)$, where each rule $\rho_i:
-\mathcal{B} \to \mathbb{N}$ for $i=1,2,3,\ldots,n$ maps a subspace of the BoW
-feature space $\mathcal{B}$ to a scalar value.
+Depending on the classification task, the domain expert preemptively creates 
+various sets of semantically similar words that might be important for the
+discrimination of the categories. E.g., for the recognition of text snippets
+that are about change in management, he might create the following
+dictionaries:
 
-\begin{eqnarray*}
-\mathcal{H} \coloneqq \mathbb{N}^n \\
-\boldsymbol\rho: \mathcal{B}_V \to \mathcal{H} \\
-\boldsymbol{\rho}(\mathbf{b}) = (\rho_1(\mathbf{b}), \ldots,
-\rho_n(\mathbf{b}))^\intercal
-\end{eqnarray*}
+\begin{itemize}
+  \item Dictionary \textbf{``manager''}: CEO, CFO, leader, \ldots
+  \item Dictionary \textbf{``company''}: corporation, enterprise, business,
+  concern, venture,  \ldots
+  \item \ldots
+\end{itemize} 
 
-In other words, after applying $\boldsymbol\rho$, the classification problem is
-transfered from the large feature space of BoW's to a lower dimensional and
-semantically enriched vector space engineered by the domain expert.
+The above are typical words that might indicate that a sentence refers to  
+change in management personnel. Whenever a document in the training
+dataset contains a word that appears in one of the dictionaries it is
+substituted with the word that represents it. E.g., consider the following
+sentence: ``The \textbf{corporation} announced a new \textbf{CEO} for 2017''. In this case, the
+words in this sentence would be substituted as follows: ``The \textbf{company}
+announced a new \textbf{manager} for 2017''. 
 
-The following toy example illustrates how such a rule might look
-like for a specific vocabulary:
-
-\begin{equation*}
-\begin{split}
-V_P \supset \{(\text{'good', ADJ})\}, V_2 \supset \{(\text{``not"},
-\text{``bad"})\}
-\\
-\rho_1(\mathbf{b}) = \mathbf{b}((\text{'good',ADJ})) +
-\mathbf{b}((\text{``not", ``bad"}))
-\end{split}
-\end{equation*}
-
-Here the notations $\mathbf{b}(v)$ indicate the entry of the Bag-of-Words
-$\mathbf{b}$ for the word $v \in V$. The rule above additively combines the
-occurences of the adjective ``good'' and the bigram ``not bad'' to one new
-feature. The process is represented graphically in Figure \ref{fig:rho}.
-
-%\usepackage{graphics}
-% is needed for
-% \includegraphics
-\begin{figure}[htp]
-\begin{center}
-  \includegraphics[trim= 0 45.94mm 210mm 21mm, clip, scale=0.5]{img/rho}
-  \caption[Example for rule based features]{Example for rule based features:
-  The BoW dimensions for ``not bad'' and ``good'' are combined in to a new
-  feature by adding the frequencies of their occurences.}
-  \label{fig:rho}
-\end{center}
-\end{figure}
-
-In this example the utility of using complex linguistic features becomes
- clear: by using the PoS-Tag ``good", it is possible to disambiguate the
-its meaning, e.g. from ``good'' as a synonym for ``product''. Moreover,
-using the bigram ``not bad" allows to establish whether the word ``bad'' was
-used in a negative or in a positive way. This cannot be achieved if the words ``not'' and ``bad'' are
-represented separately as unigrams, as the word ``not'' could a
-appear in a context that does not refer to ``bad''. The feature generated by
-$\rho_1$ can be interpreted as a simple indicator for the polarity of a
-sentence, which in a task of sentiment analysis would be useful to discriminate
-positive from negative examples.
-
-In order to handle OOV words, the domain expert preemptively creates a
-set of synonyms to which the classifier can fall back to in case a word is not contained
-in the known vocabulary. He thereby selects a subset of words $v^* \in V^*
-\subset V$, that might be important for classification. Subsequently,
-for each $v^* \in V^*$ a set $T_{v^*} \subset \mathcal{V}\setminus V$ of OOV
-words, that are semantically similar to $v*$ is created.  Unknown samples $\tilde{d} \in D$ can then be
-preprocessed as follows:
+The dictionaries are also used to substitute OOV words with words that are
+known by the classifier. If an unknown document contains an OOV word it is
+substituted by looking up whether it occurs in one of the dictionaries defined
+by the domain expert.
+ 
+Formally, this operation can be described formally as follows: First,
+for a labeled dataset $D$ with vocabulary $V=\mli{voc}(D)$, the domain expert 
+selects a subset of words $V^* \subset V$ that might be important for
+classification.
+Subsequently, for each $v^* \in V^*$ a set $T_{v^*} \subset \mathcal{V}$ of 
+words, that are semantically similar to $v^*$ is created.  Both the
+documents $d \in D$ and unknown samples $\tilde{d} \in \mathcal{D} \setminus D$
+can then be preprocessed as follows:
 
 \begin{eqnarray*}
-\tilde{d} := (\tilde{w_1},\ldots,\tilde{w}_{|\tilde{d}|}) \in
-\mathcal{D}\setminus D
-\\
 \boldsymbol\pi: \mathcal{D} \to \mathcal{D} \\
-\boldsymbol\pi(\tilde{d}) =
-(\pi(\tilde{w_1}),\ldots,\pi(\tilde{w}_{|\tilde{d}|})) \\
-\pi(\tilde{w}_k) = \begin{cases} \tilde{w}_k & \tilde{w}_k \in V  \\
-v^* & \tilde{w}_k \in T_{v^*} \\
-\mathrm{<unknown>} & \mathrm{otherwise} \end{cases}& ,~k=1,\ldots,|\tilde{d}|
+\boldsymbol\pi(d) =
+(\pi(d^{(1)}),\ldots,\pi(d^{(|d|)})) \\
+\pi(d^{(j)}) = \begin{cases} 
+v^* & d^{(j)} \in T_{v^*}, v^* \in V^* \\
+d^{(j)} & \mathrm{otherwise} \end{cases}& ,~j=1,\ldots,|d|
 \end{eqnarray*}
 
-Where ``<unknown>'' is used as a token in case there is no alternative available
-for an OOV word.
-An example for such a list $T_{v*}$ would be the following:
+
+The equivalent set $T_{v^*}$ for the dictionary \textbf{``manager''} mentioned
+above, would be the following:
 
 \begin{equation*}
-T_{\text{``good''}} = \{\text{``outstanding''}, \text{``excellent''}, \ldots\}
+T_{\text{``manager''}} = \{\text{``CEO''}, \text{``CFO''},  \text{``leader''}
+\ldots\}
 \end{equation*}
-
-In this case, we the words ``outstanding'' and ``excellent'' do no
-appear in the underlying dataset. If either word is seen in an unknown
-document, it is mapped to the semantically related word ``good''.
 
 \subsubsection{Benefits of word substitutions in text classification}
 
 In section \ref{sec:challenges} we considered two of the main problems in TC
 introduced by high dimensional feature spaces, especially when using higher
-complex linguistic features such as N-Grams and PoS-tags, i.e. feature sparsity
-and OOV-words. We now address the question of how the preprocessing done by the
-domain in fact implies an alleviation of the mentioned problems .
+complex linguistic features such as N-Grams and PoS-tags, i.e. words
+with low counts and OOV-words. We now address the question of how the
+preprocessing done by the domain expert in fact implies an alleviation of the mentioned problems .
 
-\paragraph{Reduction of feature sparsity}
-In order to show how rule based features can be helpful for text classification,
-we are going to consider a polarity task that has be solved using Naive Bayes
-learning on a toy dataset with the following word distributions:
+\paragraph{Increasing statistical robustness}
+In order to show how substitution using dictionaries can be helpful for text classification,
+we are going to consider a polarity task that has be solved using MNB learning (see
+Section \ref{sec:statistical-tc}) on a toy dataset with the following word
+distributions:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c}
@@ -920,23 +895,18 @@ $v$ & $N(v, +)$ & $N(v,-)$ & $\hat{P}(v\given +)$ & $\hat{P}(v \given -)$ \\
 This & $23$ & $25$ & $2.4\cdot 10^{-3}$  & $2.6 \cdot 10^{-3}$\\
 is & 45 & 47 & $4.6\cdot 10^{-3}$ &  $4.8\cdot 10^{-3}$ \\
 good & 10 & 3 & $1.1 \cdot 10^{-3}$ & $4.0 \cdot 10^{-4}$ \\
-not bad & 1 & 1 & $2.0 \cdot 10^{-4}$ & $2.0 \cdot 10^{-4}$   
+superb & 1 & 1 & $2.0 \cdot 10^{-4}$ & $2.0 \cdot 10^{-4}$   
 \end{tabular}
 \end{center}
-
-The class conditional word probabilities with the method described in
-section \ref{sec:naive-bayes}.In this example we chose the smoothing parameter
-to be $\alpha = 1$.
-Assume we want the task is use the estimations of a Naive Bayes model to
-predict the polarity of the sentences ``This is good''($\eqqcolon d_i$) and
-``This is not bad'' ($\eqqcolon d_2$).
-which are represented, whos true label we assume to be $\omega(d_1) =
+Suppose the task is to predict the polarity of the sentences 
+``This is good''($\eqqcolon d_1$) and ``This is superb'' ($\eqqcolon d_2$).
+which are represented, whose true label we assume to be $\omega(d_1) =
 \omega(d_2) = +$. The sentences are represented by the following tuples:
 
 \begin{equation*}
 \begin{split}
 d_1 = (\text{'This'}, \text{'is'}, \text{'good'}) \\
-d_2 = (\text{'This'}, \text{'is'}, (\text{'not'}, \text{'bad'}))
+d_2 = (\text{'This'}, \text{'is'}, (\text{'superb'}))
 \end{split}
 \end{equation*}
 If we assume prior class probabilities $\hat{P}(+) = \hat{P}(-) = 0.5$,
@@ -960,9 +930,9 @@ Analogously, for $d_2$ we obtain the following posteriors:
 
 \begin{equation*}
 \begin{split}
-\hat{P}(d_2|+) &=  \hat{P}(\text{'This'} \given +) \cdot \hat{P}(\text{'is'} \given +) \cdot \hat{P}(\text{'not bad'} \given
-+)\\ &= 0.22 \cdot 10^{-6} \% \\
-\hat{P}(d_2|-) &=  \hat{P}(\text{'This'} \given -) \cdot \hat{P}(\text{'is'} \given -) \cdot \hat{P}(\text{'not bad'} \given
+\hat{P}(d_2|+) &=  \hat{P}(\text{'This'} \given +) \cdot \hat{P}(\text{'is'}
+\given +) \cdot \hat{P}(\text{'superb'} \given +)\\ &= 0.22 \cdot 10^{-6} \% \\
+\hat{P}(d_2|-) &=  \hat{P}(\text{'This'} \given -) \cdot \hat{P}(\text{'is'} \given -) \cdot \hat{P}(\text{'superb'} \given
 -) \\ &= 0.24 \cdot 10^{-6} \% \\
 \\
 \hat{P}(+|d_2) &= \frac{\hat{P}(d_2 \given +)\cdot \hat{P}(+)}{\sum\limits_{\omega' \in \{+,-\}}
@@ -987,22 +957,27 @@ Since $\hat{P}(+ \given d_1) > \hat{P}(- \given d_2)$, a NB classifier
 would correctly assign $d_1$ to the positive class, while $d_2$ would be
 incorrectly assigned to the negative class because $\hat{P}(- \given d_2) >
 \hat{P}(+ \given d_2)$. This is due to the fact, that the words ``This'' and
-``is'', happen to occure more often in the negative class. These words are frequently
+``is'', happen to occur more often in the negative class. These words are frequently
 used but obviously not decisive for the classification task. The more important
-word ``not bad'', that indicates a positive polarity, is very unfrequent, as it occurs only two
+word ``superb'', that indicates a positive polarity, is very infrequent, as it occurs only two
 times in the dataset: one time in the positive and one time in the negative
 class. Since it is evenly distributed over the classes, it does not provide any
 discriminatory information. As a consequence, the model's
 prediction for $d_2$ tends towards the negative class.
 
-We now recompute a Naive Bayes model of the dataset preprocessed using the rule
-$\rho_1$ \footnote{For the sake of readbility, we omitted the PoS-modifier
-``ADJ'' for the word ``good''. Nevertheless, the points made by this example
-hold also in case a simple unigram ``good''.} mentioned in the previous
-section\footnote{We hereby assume that all the rules $\rho_i, i >2$ in the rule set $\boldsymbol \rho$ do not affect the statistics of ``This'' and ``is".}. This is equivalent with substituting the occurences of ``good'' with occurences of ``not bad'' or
-vice versa.
-After the substitutions, the word distributions in the preprocessed
-dataset become
+We now recompute a Naive Bayes model of the dataset preprocessed using the
+substitutions given by the dictionary:
+
+\begin{equation*}
+T_{\text{``good''}} = \{ \text{``superb'', ``fantastic'', ``excellent'',
+``outstanding'' \ldots}
+\end{equation*}
+
+After preprocessing the training dataset with $\boldsymbol \pi$ \footnote{We
+hereby assume that all the substitutions defined in $\boldsymbol \pi$  do not affect the statistics of
+``This'' and ``is".} the occurrences of ``superb'' are substituted with 
+``good'' or vice versa. After the substitutions, the word frequencies in the
+preprocessed dataset become
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c}
@@ -1010,47 +985,43 @@ $v$ & $N(v, +)$ & $N(v,-)$ & $\hat{P}(v\given +)$ & $\hat{P}(v \given -)$ \\
 \hline
 This & $23$ & $25$ & $2.4\cdot 10^{-3}$  & $2.6 \cdot 10^{-3}$\\
 is & 45 & 47 & $4.6\cdot 10^{-3}$ &  $4.8\cdot 10^{-3}$ \\
-good = not bad& 11 & 4 & $1.2 \cdot 10^{-3}$ & $4.0 \cdot 10^{-4}$ \\
+good = superb& 11 & 4 & $1.2 \cdot 10^{-3}$ & $4.0 \cdot 10^{-4}$ \\
 \end{tabular}
 \end{center}
 
-
-When applying $\rho_1$ to the bags of words $\mathbf{b}_1 = \mli{bow}(d_1),
-\mathbf{b}_2=\mli{bow}(d_2)$ , they become identical, i.e.
-$\boldsymbol \rho(\mathbf{b}_1) = \boldsymbol \rho(\mathbf{b}_2)$.  Computing the posterior class probabilities as we did for the first
-model yields the following results:
+Note that in the preprocessed dataset, the frequencies of the words ``good"
+and ``superb" are merged additively. Moreover, when applying $\boldsymbol \pi$
+the documents $d_1$ and $d_2$ become identical, i.e. $\boldsymbol \pi(d_1) = \boldsymbol \pi(d_2) = (\text{``This''}, \text{``is''}, \text{``good''})$.
+Computing the posteriors as we did for the first model
+yields the following results:
 
 \begin{center}
 \begin{tabular}{c|c|c}
-$\mathbf{b}$ & $\hat{P}(+ \given \mathbf{b})$ & $\hat{P}(- \given \mathbf{b})$ \\
+$d$ & $\hat{P}(+ \given d)$ & $\hat{P}(- \given d)$ \\
 \hline
-$\boldsymbol \rho(\mathbf{b}_1)$ & $72.6 \%$ & $27.4 \%$ \\
-$\boldsymbol \rho(\mathbf{b}_2)$ & $72.6 \%$ & $27.4 \%$ \\
+$\boldsymbol \pi(d_1)$ & $72.6 \%$ & $27.4 \%$ \\
+$\boldsymbol \pi(d_2)$ & $72.6 \%$ & $27.4 \%$ \\
 \end{tabular}
 \end{center}
 
 Using the Naive Bayes model that is based on the preprocessed dataset, both
-documents are correctly classified. Even though synthetical and simplified, this
+documents are correctly classified. Even though synthetic and simplified, this
 example demonstrates how using semantic knowledge can improve text
-classification: merging the terms ``good" and ``not bad" is equivalent to
-leveraging the knowledge that both terms are semantically related and use
+classification: substituting ``superb" with ``good" is
+equivalent to leveraging the knowledge that both terms are semantically related and use
 the statistical information provided by the more frequent term
-``good" to infer a more robust estimate of the statistics of the unfrequent term ``not bad''.
-Hence, in the second model $d_2$ is classified correctly.
-Note that, this is also equivalent to reducing the sparsity of the BoW feature
-space: the dimension that corresponds to the word ``not bad'' has only two
-non-zero elements, one for each occurence of the term. After applying the preprocessing
-rule this dimension is removed and the two occurences are mapped onto the less
-sparse dimension of the word ``good''.
+``good" to infer a more robust estimate of the statistics of the infrequent term ``superb''.
+Hence, with the combined word frequencies, in the second model $d_2$ is
+classified correctly.
 
-\paragraph{Substitution OOV-words}
+\paragraph{Substitution of OOV-words}
 The smaller a labeled dataset used, the more it is probable to encounter words
 that are not covered by the learned classification model and as a consequence
 the information an OOV-word would potentially provide to solve the underlying
 classification task cannot be used. In order to show the detrimental effects that OOV-words can
 have on classification efficacy, we resort to the example mentioned in the
 previous section. Suppose the goal is to classify the document ``This is
-outstanding'' ($\eqqcolon d_3$). Again the we assume true label to be positive
+outstanding'' ($\eqqcolon d_3$). Again the we assume the true label to be positive
 ($\omega(d_3) = +)$. As for $d_2$ in the previous example, the
 posterior probability for the negative class is incorrectly estimated to be
 larger than the posterior for the positive class:
@@ -1067,59 +1038,39 @@ larger than the posterior for the positive class:
 \end{equation*}
 Since the word ``outstanding'' is not covered by the classification model, it
 cannot be incorporated in the probability estimation. As a result the
-posteriors depend only on the words ``This'' and ``given''.
-In this case, by using the list of semantically similar words $T_{``good''}$
-(see \ref{sec:asd}) and preprocess the document with $\boldsymbol \pi$ on $d_3$ we obtain: 
+posteriors depend only on the words ``This'' and ``is''.
+In this case, the list of semantically similar words
+$T_{\text{``good''}}$ is used to preprocess the document
+with $\boldsymbol \pi$ on $d_3$ and we obtain:
 
 \begin{equation*}
 \boldsymbol\pi(d_3) = (\text{``This'', ``is'', ``good''})
 \end{equation*}
 
 After the missing word was replaced with ``good'', the posterior probabilities
-will be estimated to be the same as for $d_1$ (see Equation \ref{eq:}) and
+will be estimated to be the same as for $d_1$ and
 hence $d_3$ is classified correctly after preprocessing it with
 $\boldsymbol\pi$.
-Again the exogenous semantic knowledge contributed by the domain expert, was
+Again, the exogenous semantic knowledge contributed by the domain expert, was
 used as a measure to utilize the more confident model estimation of ``good" to
 make a statistically more robust prediction for the class of a document.
 
+\paragraph{Dimensionality reduction} The third benefit is based on the fact
+that, by preprocessing the dataset as described, the dimensionality of the BoWs
+features used for training is reduced. This is because the vocabulary $V$ of a
+training set $D$ is mapped to a smaller subset of words $V' \subset V$, in which
+any word in $v \in T_{v^*}, \forall v^* \in V^*$ is no longer present in the vocabulary 
+of the preprocessed datset. With a reduced feature set, the classification model becomes 
+less prone to detrimental effects such as overfitting \cite{sebastiani2002machine}.   
+
 \subsection{Automating the manual preprocessing step}
 
-Inspite of its beneficial effects, preprocessing the dataset manually by
-generating rule based features is a time consuming and costly process that
-involves a domain expert with linguistic skills.
-Moreover, rules created for a specific classification task can often not be re-used in
-other application domains. Nonetheless, it is noteworthy that in Echobot's
-productive environment the list of rules $\boldsymbol\rho$ and the OOV-word replacement 
-function $\boldsymbol\pi$ often consist of merging or substituting semantically similar expressions and phrases.
-As already discussed in Section \ref{sec:introduction:proposed-method}, our
-method proposes a novel distance measure that expresses both the semantic and
-the distributional dissimilarity between words. With this tool at hand, an
-intuitively sensible approach would be to leverage our word distance measure to
-find and merge groups of similar words.
-Given a dataset $D$ and a word embedding $\mathcal{W}$, automating the substitution process
-implies solving the following two tasks:
-
-\begin{enumerate}
-  \item Find a function $\boldsymbol\sigma(D,\mathcal{W},\Theta_\sigma):
-  \mathcal{B} \to \mathcal{H'}$, such that, given parameters $\Theta_\sigma$,
-  documents are mapped from the high dimensional BoW feature space
-  $\mathcal{B}_V$ to a lower dimensional feature space $\mathcal{H'}$ that
-  incorporates the semantic knowledge introduced by word embeddings and the implicit
-  distributional information given by the dataset itself.
-  
-  \item Find a function $\tau(D,\mathcal{W}, \Theta_\tau): \tilde{V} \to V$ that
-  maps OOV words $\tilde{V}$  to the known vocabulary $V$, given parameters
-  $\Theta_\tau$.
-  \end{enumerate}
-  
-  Coarsely speaking, $\boldsymbol\sigma$ acts as the automated counterpart of the
-  rule set $\boldsymbol\rho$, whereas $\tau$ fulfills the role of the substitutions
-  $\pi$.  
-  In the course of this work, we will show that $\boldsymbol\sigma$ can
-  be realized by finding clusters with an hieararchical aggolemartive clustering
-  algorithm that operates on distance matrix $\mathbf{W}$, while $\tau$ is a
-  simple nearest neighbor search using the cosine distance on word vectors.  
-  By doing so, our experiments show that text classification accuracies are
-  can be improved in all the evaluated datasets, with smaller datasets benefitting the most from
-  our method.
+In spite of its beneficial effects, preprocessing the dataset manually by
+generating task specific dictionaries, is a time consuming and costly process
+that involves a domain expert with linguistic skills.
+However, as already anticipated in Section \ref{sec:introduction:proposed-method}, in this work
+we propose a novel distance measure that expresses both semantic and
+the distributional dissimilarity between words. We propose to automate the lexical substitution process otherwise supervised by a human domain expert,
+by finding groups of semantically similar words by using our word distance measure in combination 
+with a state-of-the-art clustering algorithm.  Our experiments show, that by preprocessing a dataset as described, 
+text classification is improved in all the evaluated datasets, outperforming state-of-the-art classification approaches. 

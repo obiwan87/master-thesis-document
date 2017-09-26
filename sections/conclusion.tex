@@ -10,7 +10,23 @@
 %%
 %% Version 1.3, 2016-12-29
 
-\chapter{Conclusion}
+\chapter{Conclusion and Future Work}
 \label{ch:Conclusion}
 
-\dots
+The main contribution of this work was to introduce a theoretically motivated \emph{semantic-distributional word distance measure} that allows to improve 
+short text classification with small datasets. By using a state-of-the-art clustering algorithm, we showed that we can perform 
+lexical substiution on unfrequent terms and OOV-words and, hence, make the classification process more robust towards noise and
+unknown vocabulary. Moreover, as demonstrated in Section \ref{ssec:importance-word-frequencies}, we illustrated that employing semantical
+similarity only might be not beneficial for certain classification tasks. Instead, we propose to include supervised, distributional information yielded 
+by the word statistics in the underlying training dataset. As opposed to methods proposed in the past, that exclusively used either distributional or semantic
+similarity to perform term clustering \cite{baker1998distributional, ma2015using}, our method achieved improvements in TC in all the evaluated datasets.
+Moreover, since our method is simply used as a preprocessing procedure to textual data, it doesn't impose any limitation on the choice 
+of the classification algorithm. We also identified some open ends that need to be further researched. 
+E.g., as mentioned in Section \ref{ssec:adding-linear-correction-term}, an interesting objective for further work, would be to clarify how to 
+incorporate semantic similarity yielded by word embeddings in the Bayesian priors without the need of a linear correction term and 
+the additional parameter $\beta$. Also, in the preprocessing method proposed in \ref{alg:preprocess-training-data}, the term clustering 
+algorithm is applied to each size of $N$-grams separately. However, it might be more useful to have the possibility to compare and cluster on phrases of variable length, such as  e.g. 'not bad' and 'good' \cite{liu2015learning}. 
+Finally, it would be interesting to address the question of whether 
+the good results in short text classification achieved with our method
+could be our transferred larger scale datasets, by employing semantic-distribuational term clustering in combination with more complex linguistic features, 
+such as larger $N$-Grams, PoS-Tags or dependency based features \cite{komninos2016dependency}. 

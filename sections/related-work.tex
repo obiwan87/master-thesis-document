@@ -1,59 +1,239 @@
 \chapter{Related Work}
+\label{ch:related-work}
 
-Being a major problem in TC, techniques for reducing statistical sparsity has
-been researched from various angles.
+Methods that aim to improve TC have been studied from various angles. We
+found that attempts to increase text classification accuracy build either on the
+choice of the classification algorithm, the feature space used
+for classification or both. In the following sections, we report
+on state-of-the-art text classification models and feature reduction
+techniques. Our method belonging to the latter category of approaches, we discuss it  
+in the context of previously conducted studies.
 
-\section{Feature Selection}
-Feature selection is a technique to reduce the feature space dimension. In the
-first step, each feature is ranked with a measure that expresses his
-discriminative power. Then, the top-$N$ features are selected and
-used for classification. 
+\section{Text Classification algorithms}
 
-In \cite{yang1997comparative} Yang et al.
-compared text classification effectiveness by using measures like \emph{mutual information},
-\emph{information gain}, $\chi^2$-squared test to select a subset of relevant
-features. The proposed measures explore the relative distribution of 
-terms among the classes and rank features with higher discrimination information
-with higher absolute values. Their experiments show that classification
-accuracy either remains the same or is slightly poorer after applying feature selection.
+In the following sections we introduce the most and successful important classification models used 
+in TC and that were also used for the evaluation of our method, namely the MNB model (see Section \label{sssec:mnb})
+Support Vector Machine (SVM).   
 
-Singh et al. propose a feature selection approach based on the
-concept of \emph{Gini coefficient of inequality}, usually implied for measuring the
-inequality of income. Despite outperforming the formerly mentioned statisical
-measures, no overall improvement on classification was reported
-\cite{singh2010feature}. 
+\subsection{Naive Bayes (NB)}
 
-\section{Term Clustering}
+\emph{Naive Bayes} (NB) classifiers belong to the class of \emph{probabilistic classifiers},
+i.e. classification is performed by estimating the probability of a class $\omega$
+given a document $d$: $\Pr(\omega \given d)$ . A document is then assigned 
+to the class with the highest probability \cite{mccallum1998comparison}. 
+There are various NB models, each based on a different distribution assumption,
+that have been evaluated in the context of text classification, namely the Multinomial Naive Bayes (MNB) (see also Section
+\ref{sssec:mnb}), Multivariate Bernoulli (MB) (a.k.a Binary Independence Model),
+the Poisson Naive Bayes Model and the negative Binomial model
+\cite{Eyheramendy2003, Lewis1998}. In \cite{Eyheramendy2003} Eyheramendy et al. 
+shows that MNB outperforms the other variants in almost all classification
+tasks. However, what characterizes all these models is the ``naive'' and
+clearly wrong assumption that word occurrences are conditionally independent. Despite being
+based on an incorrect assumption, classification performance of especially MNB
+is surprisingly good \cite{wang2012baselines}. In \cite{zhang2004optimality} Zhang provides a
+mathematical proof of why the underlying naive assumption of NB models is 
+still optimal.
 
-\subsection{Distributional Clustering}
+It seems that on most classification tasks, NB is outperformed by other
+statistical classifiers such as SVM and kNN (see Section \ref{sec:svm}). 
+Nonetheless, several tweaks based normalization and
+weighting techniques of BoW vectors make NB models
+competitive with SVM and kNN \cite{kim2006some, Mendoza2012}. Also, in
+\cite{wang2012baselines} experimentally shows that short text classification 
+often performs better with MNB models than with SVMs. Therefore, NB models are
+still used in establishing baselines for text classification tasks
+\cite{Rennie2003}. Moreover, MNB models are popular in practical
+applications because of how fast they are both in terms of implementation and
+computation time.
 
- Another family of approaches, that is more related to this work, is so called
- \emph{term clustering}. Instead of selecting single features, term clustering methods aim
- to reduce feature dimensionality by partitioning the feature space into
- $K$ clusters of subspaces. The clusters build in this way are than used as
- features as a \emph{Bag of Word-Clusters}. Baker et al.
- \cite{baker1998distributional} propose to cluster terms using a distributional metric based on a variant of the
- kullback-leibler divergence. The suggested metric expresses the discriminative
- information loss given by clustering two terms together.
- The proposed clustering algorithm greedily clusters terms with minimal
- information loss. The results of their experiment showed that feature
- dimensionality can be heavily reduced without losing much classification accuracy.
- Nonetheless, no improvement in comparison to unpreprocessed datasets were
- reported. Based on Baker's work \cite{baker1998distributional},
- Slonim and Tishby \cite{slonim2001power} propose an improved clustering
- algorithm using the \emph{Information Bottleneck Method}. The principle is similar to
- \cite{baker1998distributional}, but theoretically derived by maximizing the
- mutual information of a word and its cluster with respect to their relative
- distribution over the categories. Moreover, they also develop a clustering
- algorithm, in which the pairwise cluster-distances are update as the clusters
- change.
- They show that their method can improve classification accuracy, however only when datasets are very small. 
- For large datasets the quality of classification decays.
+\subsection{Support Vector Machine (SVM)}
+\label{sec:svm}
 
- \subsection{Semantic Clustering}
- 
- With the introduction of word embeddings, term clustering has been researched
- on the bases of the basis of the induced distance metric in the embedding
+The idea of learning discriminative models based on Support Vector Machines
+(SVM) was introduced by Vapnik et al. \cite{vapnik2013nature}. In its linear
+form, which is also used in most TC tasks, an SVM finds an
+hyperplane that separates a set of positive from a set negative samples.
+In the TC community, SVM classifiers have been preferred over NB classifiers, because of
+their consistently better performance in many TC tasks
+\cite{dumais1998inductive}. Especially when dealing with a (1) long documents
+or (2) with small numbers of training samples per 
+class, SVMs tend to be more robust than NB models \cite{wang2012baselines, Yang1999}.
+
+In \cite{wang2012baselines} Wang et al. introduce the linear SVM with Naive
+Bayes features (NBSVM) (see also Section \ref{sec:nbsvm}). As opposed to
+traditional linear SVMs, the trained weights postprocessed after training.
+Experiments show that NBSVM seems to perform better than NBs and SVMs in almost
+all classification tasks. We therefore use the effectiveness of our method with 
+baselines provided by this classification model.
+
+\subsection{Artificial Neural Networks}
+
+In recent years, with increasing computational power and memory resources, applications 
+using \emph{Artificial Neural Networks} (ANN) have regained popularity in TC
+applications. ANNs are inspired from biological neural networks, hence the basic
+processing unit is called a \emph{neuron}. ANNs can be viewed as weighted
+graphs of interconnected neural units. Computations are
+performed by propagating data from the input units throughout the whole net. The result is
+returned at the output units. Learning is performed by iteratively adapting the
+weights between neural units while minimizing the output error with respect to a
+target function. It has been shown that neural networks can be used as universal
+function approximators and therefore are also appropriate for solving
+classification tasks \cite{Hornik1989}. 
+
+First steps forward in TC with neural networks are reported in
+\cite{zhang2006multilabel}: Zhang et al. successfully apply a training algorithm
+appropriate for multilabel classification and report improvements on
+classification accuracy on the \emph{Reuters} dataset. In
+\cite{kim2014convolutional} Kim et al. propose to adapt pretrained word
+vectors generated with an SG model (see Paragraph ``\nameref{par:word-embeddings}'') for task
+specific classification with results better than state-of-the-art. Lai et al.
+use Recurrent Convolutional Neural Networks (RCNN) in TC, also outperforming non-ANN
+classification methods on some datasets. \cite{lai2015recurrent}. In
+\cite{zhang2015character} Zhang et al propose neural network based classification with character-level
+input. However, they don't report any significant improvements compared to
+classical classification methods with BoW and N-Grams.
+
+One major drawback of neural networks, is the large numbers of parameters, i.e.
+the weights between the neurons, that has to be learned. For the network to learn a
+model capable of generalizing the underlying classification task, large scale
+datasets are required \cite{zhang2015character}. Similarly to our method, the 
+approaches described in \cite{lai2015recurrent, kim2014convolutional, wang2016semantic} 
+compensate for the scarcity of training data, by integrating pre-trained word vectors (see
+``\nameref{par:word-embeddings}''). 
+
+\subsection{Discussion}
+
+Among the three classification methods discussed in this section, namely Naive
+Bayes models, linear SVMs and Neural Networks, there doesn't seem to be a clear
+winner that outperforms the other classification methods in all tasks
+\cite{wang2012baselines, zhang2015character}. The performance often depends on
+the evaluated dataset. However, linear SVMs and especially the NBSVM seem to be
+consistently robust in many classification tasks \cite{le2014distributed}. Without loss of generality,
+in this work we will evaluate our methods on MNB classifiers and the NBSVM. However, 
+since our method is applied prior to classification, any text classification
+algorithm can be used in connection with our approach, including neural network 
+based algorithms.
+
+\section{Dimensionality Reduction in Text Classification}
+
+One of the main challenges in text classification, is the high dimensionality of
+the feature space, which is a result of the complexity and variability of human
+language. Even for small datasets, the heterogeneity of human language implies a
+relatively large number unique terms. Having a large number of terms compared to the number
+of samples used for training can lead to detrimental effects such as overfitting
+--- i.e. a classifier does not learn to generalize the classification problem,
+but rather is tuned to explain the observations used for training
+\cite{sebastiani2002machine}.
+
+In order to overcome the problems introduced by high dimensional feature spaces,
+various techniques, including the method proposed in this work, have been developed 
+to reduce the number of terms without losing information relevant to the underlying 
+classification task. 
+
+\subsection{Dimensionality Reduction by Term Selection}
+Term selection is a technique to reduce the feature space dimension by
+selecting only the terms that are assumed to be important for maintaining 
+discriminatory information for the current classification task.
+In a first step, each word in the vocabulary of the training dataset is ranked
+with a measure that expresses his discriminative power. Then, the top-$N$ features 
+are selected and used for classification. 
+
+In \cite{yang1997comparative} Yang et al. compared text classification
+effectiveness by using the following, very popular measures:
+
+\begin{itemize}
+  \item mutual information (MI)
+  \item information gain (IG)
+  \item $\chi^2$-squared test (CHI)  
+  \item document frequency (DF)
+  \item term strength (TS)
+\end{itemize}
+  
+These methods, which often are used as baselines, make use of the relative
+distribution of terms among the classes to establish a ranking based on their discriminative power. 
+In their study Yang et al. show that except for MI, all term selection methods perform similarly: 
+classification accuracy either remains the same or is slightly better after
+applying feature selection. 
+This is only partially consistent to what is reported in the 
+comparative study conducted by Forman in \cite{forman2003extensive}. 
+He claims that classification accuracy on features selected with the mentioned
+methods either remains the same or decays. However, both works report that MI 
+has mostly detrimental effects on TC effectiveness. Forman also proposed 
+a novel measure, the Bi-Normal separation (BNS), that outperforms classification
+with both other feature selection techniques, and the original datasets. In
+\cite{MLADENIC200345} Mladeni and Marko evaluated feature selection on a large
+hierarchical website dataset. In their experiments the best performing measure was \emph{Odds Ratio}, which is
+calculated with probability estimates under a NB model.
+In \cite{li2009framework} Li et al. use the mentioned feature selection
+techniques, to evaluate sentiment analysis tasks. They report that none of 
+the previously studied methods outperformed classification with the original terms. 
+Instead they propose a novel measure that slightly improves accuracy. 
+A more recent feature selection approach was proposed Singh et al. propose and
+is based on the concept of \emph{Gini coefficient of inequality}, which
+is usually implied for measuring the inequality of income. Despite outperforming
+the formerly mentioned statistical measures, they do not report
+improvements over the original datasets \cite{singh2010feature}.
+
+As previous comparative studies show, the application of automatic feature
+selection methods can be used to heavily reduce the feature space without losing
+too much classification accuracy. In some cases even slight improvements are
+reported \cite{forman2003extensive, yang1997comparative}. For
+classification tasks with large corpora, where the number of features
+becomes a problem in terms of memory and computation time, term
+selection might be a viable tool to trade off quality for resource
+efficiency. 
+
+In conclusion, we can say that the effects of feature selection vary from
+study to study, probably because their performance largely depends on the
+evaluated classification task \cite{forman2003extensive, yang1997comparative,
+CHEN20095432, li2009framework}. E.g., Dai et al.
+report that applying known methods such as IG, DF and CHI to Chinese
+text, performed poorly \cite{dai2004comparative}. Also in \cite{MLADENIC200345}
+Mladeni and Mark report different performances with IG, depending on (1) how
+balanced the samples were distributed among the classes were and (2) whether the measure was calculated by
+assuming binary or a multi-class problem.  
+
+\subsection{Dimensionality Reduction by Term Extraction}
+Another family of approaches, that is strongly related to this work, is so called
+\emph{term extraction}. Instead of selecting the best features available in the
+dataset, term extraction methods aim to reduce feature dimensionality by
+transforming the set of terms $V$ to a \emph{synthetic} set of terms $V'$ with
+$|V'| < |V|$.
+\cite{sebastiani2002machine}
+
+\subsubsection{Term Clustering}
+\label{sss:term-clustering}
+Approaches based on \emph{Term Clustering} aim at reducing the dimensionality
+and the statistical noise introduced by infrequent terms, by finding
+clusters of similar terms and use them, instead of single words, to represent
+documents as a Bag-Of-Clusters (BoC) (see Section \ref{sec:lex-sub-boc}).
+
+\paragraph{Distributional Clustering}
+
+Baker et al. \cite{baker1998distributional} propose to cluster terms using a distributional 
+metric based on a variant of the kullback-leibler divergence. The suggested
+metric expresses the discriminative information loss given by clustering two terms together.
+The proposed clustering algorithm greedily clusters terms with minimal
+information loss. The results of their experiment showed that feature
+dimensionality can be heavily reduced without losing much classification accuracy.
+Nonetheless, no improvement in comparison to unpreprocessed datasets were
+reported. Based on Baker's work \cite{baker1998distributional},
+Slonim and Tishby \cite{slonim2001power} propose an improved clustering
+algorithm using the \emph{Information Bottleneck Method}. The principle is similar to
+\cite{baker1998distributional}, but theoretically derived by maximizing the
+mutual information of a word and its cluster with respect to their relative
+distribution over the categories. Moreover, they also develop a clustering
+algorithm, in which the pairwise cluster-distances are updated as the clusters
+change.
+They show that their method can improve classification accuracy, however only when datasets are very small. 
+For large datasets the quality of classification decays.
+
+\paragraph{Semantic Clustering}
+\label{par:semantic-clustering}
+ With the introduction of the Skip-Gram (SG) (see Paragraph
+ ``\nameref{par:word-embeddings}'') model by Mikolov et al.
+ \cite{mikolov2013distributed}, term clustering has been researched on the basis 
+ of the induced distance metric in the embedding
  vector space. Long and Yanqing \cite{ma2015using} used the cosine similarity
  between word vectors to build term clusters using $K$-Means. A bag of clusters
  was then used for classification. Their results suggest that a slight
@@ -65,23 +245,234 @@ measures, no overall improvement on classification was reported
  the input document. Classification was evaluated on short text datasets.
  Their work reports slight improvements in classification in comparison
  with other state-of-the-art approaches.
+  
+ \subsubsection{Semantic Term Extraction}
  
- \section{Paragraph Embeddings}
+ The study of \emph{Semantic Term Extraction} focuses on measuring semantic
+ similarities between words based on their distributional properties. The
+ main idea behind the approaches developed in this area are depend on the
+ distributional hypothesis, which states that linguistic items with similar
+ distributions have similar meanings \cite{harris1954distributional}. The
+ approaches developed in this area share the property that terms, phrases or
+ documents are mapped into much lower dimensional spaces that incorporate semantic
+ meaning. In the following paragraphs we give a short introduction of
+ such methods and then summarize applications and results reported for text
+ classification tasks.
  
- Following the same principle of word embeddings, in \cite{le2014distributed} Le
- and Milokov also propose \emph{paragraph embeddings}. In their work they
- present a method to represent sentences of variable length as fixed-length
- vectors. Similarly to word embeddings, in the resulting embedding vector space
- similar paragraphs are close to each other. They report improvements in
- a task of sentiment analysis when compared to state of the art approaches using
- BoWs. 
+ \paragraph{Latent Semantic Indexing}
  
- \section{Discussion}
- The methods discussed above either use the distributional or semantic
- information provided by word embeddings to reduce statistical sparsity and thus
- improve or retain classification accuracy with lower dimensional feature
- spaces. To the best of our knowledge, an attempt to combine both approaches,
- i.e. distributional and semantic clustering, has not been made yet. Our work
- proposes to use both the distributional information provided by the
- labeled dataset and the external semantic knowledge from pre-trained word
- embeddings to perform term clustering.
+The main idea of \emph{Latent Semantic Indexing (LSI)}, sometimes also 
+\emph{Latent Semantic Analysis (LSA)}, extracts semantic information based on the analysis of
+word co-occurences. In \cite{landauer1998introduction} Landauer et al., who
+originally introduced LSI, propose that words and phrases that tend to
+appear in similar pieces of text, can be mapped onto a vector space that preserves
+their latent semantic relationships. This is done by finding the principal components of the 
+co-variance matrix of the term-by-document matrix (TDM) of a large corpus. For a document
+set $D$ with vocabulary $V = \mli{voc}(D)$ a TDM is defined as follows:
+
+\begin{equation*}
+\mathbf{T} = \left(\begin{matrix}
+		N_{v_1, d_1} & \dots & N_{v_1, d_{|D|}} \\
+		\vdots & \ddots & \vdots \\
+		N_{v_{|V|}, d_1} & \dots & N_{v_{|V|}, d_{|D|}}
+	  \end{matrix}\right) \in \mathbb{R}^{|V| \times |D|}
+\end{equation*}
+
+The matrix represents the frequencies of the terms (rows) for each document in
+the corpus (columns). Then the Singular Value Decomposition (SVD)
+\cite{golub1970singular} of of the TDM is computed, i.e. $T$ is decomposed as
+follows:
+
+\begin{equation*}
+	\mathbf{T} = \mathbf{U}\cdot\mathbf{S}\cdot\mathbf{W}^T
+\end{equation*}
+
+Here $S$ is a diagonal matrix containing the eigenvalues of a $\mathbf{T}\mathbf{T}^T$ and
+$\mathbf{T}^T\mathbf{T}$, with $\mathbf{U}$ and $\mathbf{W}$ being the corresponding eigenvector
+matrices.
+The dimensionality reduction is applied by selecting the first $k$ eigenvectors
+of $\mathbf{U}$ with descending eigenvalues and discarding the others.
+A document or a word can be transformed linearly in the reduced feature space by
+multiplying it with the corresponding $k$ eigenvectors matrix as follows:
+
+\begin{equation*}
+\mathbf{\hat{d}} = \mathbf{S}_k^{-1}\mathbf{U}_k^T\cdot\mli{bow}(d; V)
+\end{equation*}
+
+Here $\mathbf{S}_k$ and $\mathbf{U}_k$ denote the eigenvalue matrix $\mathbf{S}$ and the eigenvector
+matrix $\mathbf{U}$ containing only the selected components. Experiments show that if a large 
+corpus is used for training, the resulting feature space can preserve semantic
+relationships between both terms and documents. 
+
+The effectiveness of LSI to capture semantic relationship has been shown in
+several tasks. In the same work that introduces LSI
+\cite{landauer1998introduction}, the authors report that the ability of LSI to
+capture semantics was comparable to human performance. Improvements of LSI have
+been developed by incorporating it in a probabilistic generative process, 
+so called probabilistic LSI (pLSI) \cite{Hofmann1999}, which
+has shown to be more effective in capturing semantics even with lower dimension
+than classic LSI. As opposed to LSI, each dimension of pLSI feature vectors is interpretable 
+and can be assigned to group of words with topical similarity (see also Paragraph
+``\nameref{par:lda}''), whereas the dimensions of classic LSI don't have any specific meaning.
+
+In \cite{Ding2008}, Ding et al. argue that, when LSI is applied as-is
+in text classification, no significant increase or even a decay in accuracy can
+be observed. Therefore, they propose a method called LRLW-LSI: instead of
+applying LSI to the entire corpus, it is computed separately on documents that
+best represent the category in which they occur. As a consequence, the resulting
+LSI feature space incorporates information about the underlying classification
+task. They report improvements in macro-averaging F1 score of 3.7\% on the
+dataset Reuters 21758. However, in \cite{Zhang2011}, classification using
+$N$-Grams, LSI and TF-IDF features was compared. As opposed to \cite{Ding2008},
+their results indicate that TC with LSI features performs better than the other
+methods on both English and Chinese datasets ($+4-7 \%$). Also, in
+\cite{Zelikovitz2001} Zelikovitz et al. report an improvement in classification
+accuracy when using LSI but including also unlabeled background content to
+their training samples.
+
+Other applications of LSI include the automatic generation of text summaries
+\cite{gong2001generic}, relationship discovery \cite{Bradford2005},
+spam-filtering \cite{gee2003using} and word sense discrimination 
+\cite{pino2009application}.
+
+\paragraph{Latent Dirichlet Allocation} 
+\label{par:lda} \emph{Latent Dirichlet Allocation (LDA)} was introduced by Blei
+et al. in \cite{Blei2003}. They model documents as a finite mixture of an
+underlying set of topics. Likewise, each topic is a distribution on words, i.e.
+certain words ``trigger'' certain topics with different intensity, depending on
+their semantic similarity to the corresponding topic. The resulting document
+representation is related to what is generated by pLSI\footnote{As a matter of fact,
+in \cite{Girolami2003} shows that LDA is a generalization of pLSI.}: each dimension can be interpreted as
+a topic. High values in the corresponding dimension, indicate a stronger presence of 
+the respective topic in the document. LDA models are often referred to as ``topic models''.  
+
+Topic extraction is modeled as a hierarchical Bayesian generative model based on
+the Dirichlet distribution. The algorithm is unsupervised and parameterized by
+the Dirichlet distribution hyperparameters $\alpha, \beta$ and a fixed number of topics $k$. As in LSI and
+pLSI, the model is trained using large text corpora.   
+
+As with LSI, a labeled variant of LDA -- supervised LDA (sLDA) --- was 
+proposed by Blei et al. to be used in text classification tasks \cite{Blei2010}.
+They conducted experiments on two datasets, however not on text classification, but on the prediction of
+website popularity. They report of 8-9\% improvement over LDA for the evaluated
+datasets. Another task-sensitive variant of LDA used is maximum entropy
+discrimination LDA (medLDA), introduced by Zhu et al.
+\cite{Zhu2012}. In addition Bayesian Hierarchical Model, they incorporate
+maximum-margin optimization (such as in SVM) in topic generation. This allows to
+have class specific that allow for better discrimination in TC tasks.
+Experiments performed with medLDA seem to indicate a better classification
+performance (20\% relative precision increase on the evaluated dataset).
+
+LDA, sLDA and medLDA work well with text corpora that have long documents.
+However, in short text classification documents rarely have many words in common
+and thus their topical representation can differ heavily, even if the snippets are
+semantically similar. 
+Several methods were proposed to overcome these problems. E.g, 
+Chen et al. propose a multi-granularity method to compute topic models
+on short texts \cite{Chen2011}. The idea is to select the a subset of the
+generated topics the best fit the underlying classification task and linearly
+combine them with learned weights. Phan et al. \cite{phan2008learning}
+demonstrate how to combine concatenate classical BoW vectors of short texts
+with wit reduced topic vectors generated by the underlying LDA model. Both 
+\cite{Chen2011} and \cite{phan2008learning} achieve significant improvements on
+the \textbf{Google Snippets} dataset (more than 15\% increase in accuracy)
+compared to a simple BoW feature vectors, with Chen et al.
+\cite{Chen2011} method being slightly better.
+  
+\paragraph{The Skip-Gram Model (SG), Continuous BoW (CBOW) and GloVe} 
+\label{par:word-embeddings}
+Another family of term extraction techniques is comprised by the three related
+models, namely the Skip-Gram-Model (SG) \cite{mikolov2013distributed}, the Continuous
+BoW (CBOW) \cite{mikolov2013efficient}, and Global Vectors for Word
+Representation (GloVe) \cite{Pennington2014}. The mentioned methods, aim at
+learning embeddings of words in real-valued vector space. The Skip-Gram model
+was already introduced in Section \ref{sec:skip-gram-model}.
+Together with CBOW, they are both trained with a shallow neural network.
+The difference is that the architecture of CBOW is ``reversed'': the context is
+fed to the network as input, while the prediction target is the word at the
+center of the context window. By contrast, GloVe, like L, is a statistical
+approach operating the factorization of the word co-occurrence matrix. However,
+in \cite{Levy2015} shows that the SG model with negative (SGNS) sampling can be
+represented as a matrix factorization problem. Hence, the difference to GloVe
+is not as substantial as the different approaches might suggest. In the same
+work, the performance on lexical substitution task between the three
+models is compared and SGNS seems to outperform GloVe and CBOW in all datasets.
+
+Even though there are differences between each model, the vectors seem
+to preserve certain semantic and syntactic relationships and hence allow to compute 
+the dissimilarity between words using conventional euclidean metrics. In
+\cite{elekesvarious} Elekes et al. investigate how both the model parameter 
+``window size'' (see Section \ref{sec:skip-gram-model}) in all three models
+affects and different intervals of the cosine distance affect semantic 
+similarity between words. Upon quantifying concrete thresholds for semantic
+relatedness, their results indicate that, if similarity drops below a certain
+value, it does not imply opposite semantic meaning, but rather just indicates
+that the words compared are unrelated and thus incomparable. 
+
+Word embeddings are also used in the context of TC. A very simple method,
+evaluated in \cite{JosephLilleberge2015}, is to transform represent each
+document as the ti-idf weighted sum of the word embeddings. However, the results
+are from experiments show that the proposed method does not consistently 
+outperform simple ti-idf features classified with a SVM.  
+Following the same principle of CBOW and SG, in \cite{le2014distributed}
+Le and Mikolov also propose \emph{paragraph embeddings}. In their work they
+present a method to represent sentences of variable length as fixed-length vectors. 
+Similarly to word embeddings, in the learned vector space similar
+semantically similar paragraphs are close to each other.
+They report improvements in a task of sentiment analysis when compared to state
+of the art approaches using BoWs on the IMDB movie reviews dataset. Another,
+that uses word vectors of trained with SGNS to build semantic clusters was
+proposed by Wang et al \cite{wang2016semantic} (see Paragraph
+``\nameref{par:semantic-clustering}''). In \cite{Lai2015} Lai et al. propose to
+pre-train a recurrent neural network using SGNS and then use the semantics
+encoded in the neural weights to perform semantically enriched TC. They report
+an increase in accuracy especially for corpora with long documents.
+
+It's noteworthy that the mentioned models can be used to learn
+vector representations of more complex linguistic features, such as $N$-Grams,
+$PoS$-tagged words and terms enriched with syntactic dependency information
+\cite{Levy2014, Rothenhausler2009, Komninos2016}.
+
+\subsection{Discussion}
+
+As showed in the previous section, the focus in recent years has shifted  
+from statistical feature selection towards dimensionality reduction methods incorporating language
+semantic \cite{Blei2003, Blei2010, le2014distributed, wang2016semantic, Chen2011}. 
+However, even though successfully used in applications of TC, many semantic-aware state-of-the-art methods  
+are not suitable for short text categorization. 
+Our method can be categorized as a term extraction method that uses term clustering to both 
+reduce the feature dimensionality while incorporating semantic information. 
+As our experiments show \ref{ch:Evaluation}, it is very suitable for short text classification
+and achieves improvements in all the evaluated datasets.
+By contrast, the term clustering methods proposed so far do not integrate language 
+semantics \cite{baker1998distributional, slonim2001power} or do not take into considerations 
+the properties of the underlying classification task \cite{ma2015using, wang2016semantic}. 
+As shown in Table \ref{tbl:related-work}, the only other methods that are suitable for short text classification,
+incorporate semantic information and are sensitive towards the underlying classification task are 
+\cite{lai2015recurrent, kim2014convolutional}. However, these methods are restricted to usage within 
+neural networks, which due to the large amount of parameters, might not be suited for learning with small datasets. 
+By contrast, the datasets preprocessed with our method can be used for training  with \emph{any} text classification 
+algorithm (see \ref{ch:Method}).
+
+\begin{table}[htp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllc}
+\hline
+\textbf{References}                                                                                & \textbf{Method}                                                                         & \textbf{Semantics} & \textbf{Task specific} & \textbf{STC} & \textbf{Any TC alg.}  \\ \hline
+\cite{forman2003extensive, MLADENIC200345, yang1997comparative, li2009framework, singh2010feature} & \begin{tabular}[c]{@{}l@{}}Feature Selection:\\ IG, MI, $\chi^2$-test, ...\end{tabular} & no                 & yes                    & yes          & yes \\
+\cite{baker1998distributional, slonim2001power}                                                    & Distributional clustering                                                               & no                 & yes                    & yes          & yes \\
+\cite{ma2015using}                                                                                 & sem. clustering + word2vec                                                              & yes                & no                     & yes          & yes \\
+\cite{landauer1998introduction}                                                                    & LSI                                                                                     & yes                & no                     & no           & yes \\
+\cite{Ding2008}                                                                                    & LRLW-LSI                                                                                & yes                & yes                    & no           & yes \\
+\cite{Hofmann1999, Blei2003}                                                                       & pLSI, LDA                                                                               & yes                & no                     & no           & yes \\
+\cite{Zhu2012, Blei2010}                                                                           & sLDA, medLDA                                                                            & yes                & yes                    & no           & yes \\
+\cite{phan2008learning, Chen2011}                                                                  & LDA + BoW                                                                               & yes                & no                     & yes          & yes \\
+\cite{wang2016semantic}                                                                            & \begin{tabular}[c]{@{}l@{}}word2vec + CNN\\  + sem. clustering\end{tabular}             & yes                & no                     & yes          & no  \\
+\cite{lai2015recurrent, kim2014convolutional}                                                      & word2vec + CNN/RNN                                                                      & yes                & yes                    & yes          & no  \\ \hline
+Our Method                                                                                         & word2vec + BoW + clustering                                                             & yes                & yes                    & yes          & yes \\  
+\end{tabular}}
+\caption{Summary of related work with respect to TC methods. We indicate whether the corresponding method (1) incorporates semantic information, (2) considers the task specific document labels (3) is suitable for short text classification (STC) and (4) 
+its result can be used in connection with any classification algorithm. }
+\label{tbl:related-work}
+\end{table}
